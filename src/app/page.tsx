@@ -10,11 +10,11 @@ export default function RootPage() {
   const user = useUser();
   const firestore = useFirestore();
   const router = useRouter();
-  const [hasRedirected, setHasRedirected] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Prevent multiple redirects
-    if (hasRedirected) {
+    // This effect should only run on the client
+    if (typeof window === 'undefined') {
       return;
     }
 
@@ -23,9 +23,10 @@ export default function RootPage() {
       return;
     }
 
+    setLoading(false);
+
     if (user === null) {
       // User is not logged in, send to login page.
-      setHasRedirected(true);
       router.push('/login');
       return;
     }
@@ -34,7 +35,6 @@ export default function RootPage() {
       // User is logged in, check their role.
       const userDocRef = doc(firestore, 'users', user.uid);
       getDoc(userDocRef).then((docSnap) => {
-        setHasRedirected(true);
         if (docSnap.exists() && docSnap.data().role === 'Admin') {
           router.push('/admin/dashboard');
         } else {
@@ -43,12 +43,16 @@ export default function RootPage() {
         }
       }).catch(() => {
         // If there's an error fetching the doc, still redirect to a safe default.
-        setHasRedirected(true);
         router.push('/dashboard');
       });
     }
 
-  }, [user, firestore, router, hasRedirected]);
+  }, [user, firestore, router]);
 
-  return <div>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
+  // Render nothing while redirecting
+  return null;
 }

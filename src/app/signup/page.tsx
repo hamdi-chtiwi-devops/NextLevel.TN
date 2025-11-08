@@ -21,11 +21,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   updateProfile,
+  type User as FirebaseUser,
 } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -66,29 +67,53 @@ export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isClient, setIsClient] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  const redirectUser = async (currentUser: FirebaseUser) => {
+    if (!firestore || isRedirecting) return;
+    setIsRedirecting(true);
+
+    const userDocRef = doc(firestore, 'users', currentUser.uid);
+    try {
+      const docSnap = await getDoc(userDocRef);
+      if (docSnap.exists() && docSnap.data().role === 'Admin') {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/dashboard');
+      }
+    } catch {
+      router.push('/dashboard');
+    }
+  };
+
   useEffect(() => {
     if (isClient && user) {
-        router.push('/');
+        redirectUser(user);
     }
-  }, [user, router, isClient]);
+  }, [user, isClient]);
 
-  const handleSuccess = async (user: import('firebase/auth').User) => {
+  const handleSuccess = async (createdUser: FirebaseUser) => {
     if (!firestore) return;
     
-    const isAdmin = user.email === 'admin@admin.com';
+    const isAdmin = createdUser.email === 'admin@admin.com';
 
     const userProfile = {
-      name: user.displayName,
-      email: user.email,
+      name: createdUser.displayName,
+      email: createdUser.email,
       role: isAdmin ? 'Admin' : 'Student',
     };
-    await setDoc(doc(firestore, 'users', user.uid), userProfile);
-    router.push('/');
+
+    await setDoc(doc(firestore, 'users', createdUser.uid), userProfile);
+    
+    if (isAdmin) {
+      router.push('/admin/dashboard');
+    } else {
+      router.push('/dashboard');
+    }
   };
 
   const handleError = (error: any) => {
@@ -111,7 +136,6 @@ export default function SignupPage() {
         title = 'Sign-in method disabled';
         description = 'Email/Password sign-up is not enabled. Please enable it in your Firebase project settings.';
     }
-
 
     toast({
       variant: 'destructive',
@@ -137,6 +161,7 @@ export default function SignupPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
+      // Create a temporary user object with the new display name to pass to handleSuccess
       const userWithDisplayName = { ...userCredential.user, displayName: name };
       await handleSuccess(userWithDisplayName);
     } catch (error) {
@@ -144,11 +169,7 @@ export default function SignupPage() {
     }
   };
 
-  if (!isClient || user === undefined) {
-    return <div>Loading...</div>;
-  }
-  
-  if (user) {
+  if (!isClient || user === undefined || isRedirecting || user) {
     return <div>Loading...</div>;
   }
 

@@ -14,15 +14,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Mail, Lock } from 'lucide-react';
-import { useAuth, useUser } from '@/firebase';
+import { useAuth, useUser, useFirestore } from '@/firebase';
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  User,
 } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { doc, getDoc } from 'firebase/firestore';
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -56,21 +58,42 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 export default function LoginPage() {
   const auth = useAuth();
   const user = useUser();
+  const firestore = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isClient, setIsClient] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  const redirectUser = async (currentUser: User) => {
+    if (!firestore || isRedirecting) return;
+    setIsRedirecting(true);
+
+    const userDocRef = doc(firestore, 'users', currentUser.uid);
+    try {
+      const docSnap = await getDoc(userDocRef);
+      if (docSnap.exists() && docSnap.data().role === 'Admin') {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/dashboard');
+      }
+    } catch {
+      router.push('/dashboard');
+    }
+  };
+
   useEffect(() => {
     if (isClient && user) {
-        router.push('/');
+        redirectUser(user);
     }
-  }, [user, router, isClient]);
+  }, [user, isClient]);
+  
 
   const handleError = (error: any) => {
     let title = 'Sign in failed.';
@@ -100,7 +123,7 @@ export default function LoginPage() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      router.push('/');
+      // The useEffect will handle the redirect
     } catch (error: any) {
       handleError(error);
     }
@@ -111,20 +134,15 @@ export default function LoginPage() {
     if (!auth) return;
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push('/');
+      // The useEffect will handle the redirect
     } catch (error: any) {
       handleError(error);
     }
   };
   
-  if (!isClient || user === undefined) {
+  if (!isClient || user === undefined || isRedirecting || user) {
     return <div>Loading...</div>;
   }
-  
-  if (user) {
-    return <div>Loading...</div>;
-  }
-
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background p-4 sm:p-6 md:p-8">
