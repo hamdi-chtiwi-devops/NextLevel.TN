@@ -15,10 +15,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (user === null) {
+    if (isClient && user === null) {
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user, router, isClient]);
   
   if (!isClient || user === undefined) {
     return <div>Loading...</div>; // Or a proper loading spinner
