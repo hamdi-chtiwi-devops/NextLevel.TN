@@ -80,6 +80,37 @@ export const mockCourses: Course[] = [
       { id: 'l4-1', title: 'SEO Fundamentals', duration: 40, content: 'Optimize your website for search engines...' },
     ],
   },
+  {
+    id: '5',
+    title: 'Introduction to Machine Learning',
+    description: 'Learn the fundamentals of machine learning and build your first models.',
+    category: 'Data Science',
+    instructor: 'Sarah Johnson',
+    instructorId: 'inst-5',
+    price: 129.99,
+    thumbnail: findImage('course-5'),
+    duration: '10 weeks',
+    rating: 4.8,
+    enrolledStudents: 2100,
+    lessons: [
+      { id: 'l5-1', title: 'Understanding ML Concepts', duration: 45, content: 'Learn about supervised vs. unsupervised learning...' },
+    ],
+  },
+  {
+    id: '6',
+    title: 'Cybersecurity Essentials',
+    description: 'Protect yourself and your organization from cyber threats. Learn about network security, cryptography, and ethical hacking.',
+    category: 'Security',
+    instructor: 'David Wilson',
+    instructorId: 'inst-6',
+    thumbnail: findImage('course-6'),
+    duration: '8 weeks',
+    rating: 4.9,
+    enrolledStudents: 4200,
+    lessons: [
+      { id: 'l6-1', title: 'Basics of Cryptography', duration: 55, content: 'Understand encryption and hashing algorithms...' },
+    ],
+  },
 ];
 
 export const mockForumPosts: ForumPost[] = [
