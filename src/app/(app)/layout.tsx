@@ -25,7 +25,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   if (user === null) {
-    return <div>Loading...</div>; // Or a proper loading spinner
+    // This state is transient while the redirect happens.
+    // Return a loading indicator to prevent rendering children.
+    return <div>Loading...</div>;
   }
 
   return (
