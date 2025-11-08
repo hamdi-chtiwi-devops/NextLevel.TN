@@ -101,7 +101,7 @@ export function AppSidebar() {
                  <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton asChild>
-                            <Link href="/">
+                            <Link href="/login">
                                 <LogOut />
                                 <span>Log out</span>
                             </Link>
