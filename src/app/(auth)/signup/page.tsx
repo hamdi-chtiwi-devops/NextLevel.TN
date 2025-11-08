@@ -13,16 +13,18 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
-import { Mail, Lock } from 'lucide-react';
-import { useAuth } from '@/firebase';
+import { Mail, Lock, User } from 'lucide-react';
+import { useAuth, useFirestore } from '@/firebase';
 import {
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { doc, setDoc } from 'firebase/firestore';
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -53,40 +55,54 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export default function LoginPage() {
+export default function SignupPage() {
   const auth = useAuth();
+  const firestore = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleGoogleSignIn = async () => {
+  const handleSuccess = async (user: import('firebase/auth').User) => {
+    if (!firestore) return;
+    const userProfile = {
+      name: user.displayName,
+      email: user.email,
+      role: 'Student', // Default role
+    };
+    await setDoc(doc(firestore, 'users', user.uid), userProfile);
+    router.push('/dashboard');
+  };
+
+  const handleError = (error: any) => {
+    toast({
+      variant: 'destructive',
+      title: 'Sign up failed.',
+      description: error.message,
+    });
+  };
+
+  const handleGoogleSignUp = async () => {
     if (!auth) return;
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
-      router.push('/dashboard');
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Sign in failed.',
-        description: error.message,
-      });
+      const result = await signInWithPopup(auth, provider);
+      await handleSuccess(result.user);
+    } catch (error) {
+      handleError(error);
     }
   };
 
-  const handleEmailSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEmailSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!auth) return;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push('/dashboard');
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Sign in failed.',
-        description: error.message,
-      });
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
+      await handleSuccess(userCredential.user);
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -100,11 +116,26 @@ export default function LoginPage() {
           <div className="flex justify-center">
             <Logo />
           </div>
-          <CardTitle className="text-3xl font-headline">Welcome to NextLevel.TN</CardTitle>
-          <CardDescription>Sign in to access your learning dashboard</CardDescription>
+          <CardTitle className="text-3xl font-headline">Create your Account</CardTitle>
+          <CardDescription>Join NextLevel.TN and start learning</CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4" onSubmit={handleEmailSignIn}>
+          <form className="space-y-4" onSubmit={handleEmailSignUp}>
+             <div className="space-y-2">
+              <Label htmlFor="name">Full Name</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  required
+                  className="pl-10"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <div className="relative">
@@ -121,12 +152,7 @@ export default function LoginPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <Link href="#" className="ml-auto inline-block text-sm text-primary hover:underline" prefetch={false}>
-                  Forgot your password?
-                </Link>
-              </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
@@ -141,7 +167,7 @@ export default function LoginPage() {
               </div>
             </div>
             <Button className="w-full" type="submit">
-              Sign in
+              Create Account
             </Button>
           </form>
         </CardContent>
@@ -154,14 +180,14 @@ export default function LoginPage() {
               <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
             </div>
           </div>
-          <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
+          <Button variant="outline" className="w-full" onClick={handleGoogleSignUp}>
             <GoogleIcon className="mr-2" />
-            Sign in with Google
+            Sign up with Google
           </Button>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{' '}
-            <Link href="/signup" className="underline text-primary" prefetch={false}>
-              Sign up
+            Already have an account?{' '}
+            <Link href="/login" className="underline text-primary" prefetch={false}>
+              Sign in
             </Link>
           </div>
         </CardFooter>
