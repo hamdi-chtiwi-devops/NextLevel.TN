@@ -3,11 +3,11 @@ import { type Course } from '@/lib/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, Star, Users, BarChart } from 'lucide-react';
+import { Clock, Star, Users } from 'lucide-react';
 import { findImage } from '@/lib/placeholder-images';
 
 export function CourseHeader({ course }: { course: Course }) {
-  const instructorAvatar = findImage('avatar-3'); // Mock avatar
+  const instructorAvatar = findImage('avatar-3'); 
 
   return (
     <div className="grid md:grid-cols-3 gap-8 items-start">

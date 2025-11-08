@@ -41,18 +41,18 @@ export function AppSidebar() {
   return (
     <>
       <SidebarHeader>
-        <div className="px-2">
+        <div className="p-2">
             <Logo />
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="p-2">
+      <SidebarContent className="p-4">
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton
                 asChild
-                isActive={pathname.startsWith(item.href)}
+                isActive={pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))}
                 tooltip={{ children: item.label }}
               >
                 <Link href={item.href}>
@@ -65,7 +65,7 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter className="p-2">
+      <SidebarFooter className="p-4 mt-auto">
         <SidebarMenu>
           {bottomMenuItems.map((item) => (
             <SidebarMenuItem key={item.href}>
@@ -82,11 +82,11 @@ export function AppSidebar() {
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
-        <SidebarSeparator />
+        <SidebarSeparator className="my-2" />
         <Popover>
             <PopoverTrigger asChild>
-                <button className="flex items-center gap-3 rounded-md px-2 py-2 text-sm font-medium text-sidebar-foreground w-full hover:bg-sidebar-accent">
-                    <Avatar className="h-8 w-8">
+                <button className="flex items-center gap-3 rounded-lg p-2 text-sm font-medium text-sidebar-foreground w-full hover:bg-sidebar-accent transition-colors">
+                    <Avatar className="h-9 w-9">
                         <AvatarImage src={mockUser.avatar} alt={mockUser.name} />
                         <AvatarFallback>{mockUser.name.charAt(0)}</AvatarFallback>
                     </Avatar>
@@ -94,7 +94,7 @@ export function AppSidebar() {
                         <span className="font-semibold">{mockUser.name}</span>
                         <span className="text-xs text-muted-foreground">{mockUser.role}</span>
                     </div>
-                    <ChevronUp className="ml-auto h-4 w-4 shrink-0 group-data-[collapsible=icon]:hidden" />
+                    <ChevronUp className="ml-auto h-4 w-4 shrink-0 opacity-50 group-data-[collapsible=icon]:hidden" />
                 </button>
             </PopoverTrigger>
             <PopoverContent className="w-56 p-1 mb-2">

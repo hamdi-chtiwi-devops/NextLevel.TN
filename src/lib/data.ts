@@ -1,7 +1,5 @@
 import type { User, Course, ForumPost } from './types';
-import { PlaceHolderImages } from './placeholder-images';
-
-const findImage = (id: string) => PlaceHolderImages.find((img) => img.id === id)?.imageUrl || '';
+import { findImage } from './placeholder-images';
 
 export const mockUser: User = {
   id: 'user-123',

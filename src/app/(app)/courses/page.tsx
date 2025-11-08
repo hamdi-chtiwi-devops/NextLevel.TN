@@ -22,7 +22,7 @@ export default function CoursesPage() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {mockCourses.map((course) => (
-          <Card key={course.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow duration-300">
+          <Card key={course.id} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <CardHeader className="p-0">
               <Link href={`/courses/${course.id}`} className="block">
                 <Image
@@ -44,7 +44,7 @@ export default function CoursesPage() {
               </CardTitle>
               <CardDescription className="mt-2 text-sm">by {course.instructor}</CardDescription>
             </CardContent>
-            <CardFooter className="p-4 border-t flex justify-between items-center">
+            <CardFooter className="p-4 border-t flex justify-between items-center bg-muted/30">
               <div className="flex items-center gap-2 text-sm font-medium">
                 <Star className="w-4 h-4 fill-amber-400 text-amber-500" />
                 <span>{course.rating}</span>

@@ -44,9 +44,12 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-background to-blue-100 dark:to-gray-900/50 p-4">
-      <Card className="w-full max-w-md shadow-2xl">
-        <CardHeader className="text-center space-y-2">
+    <div className="flex min-h-screen w-full items-center justify-center bg-background p-4">
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
+        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div>
+      </div>
+      <Card className="w-full max-w-md shadow-2xl border-2 border-border/50">
+        <CardHeader className="text-center space-y-4 pt-8">
           <div className="flex justify-center">
             <Logo />
           </div>
@@ -64,7 +67,7 @@ export default function LoginPage() {
           <div className="space-y-2">
             <div className="flex items-center">
               <Label htmlFor="password">Password</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline" prefetch={false}>
+              <Link href="#" className="ml-auto inline-block text-sm text-primary hover:underline" prefetch={false}>
                 Forgot your password?
               </Link>
             </div>
@@ -74,7 +77,7 @@ export default function LoginPage() {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex-col gap-4">
+        <CardFooter className="flex-col gap-4 pb-8">
           <Button className="w-full" asChild>
             <Link href="/dashboard">Sign in</Link>
           </Button>
@@ -92,7 +95,7 @@ export default function LoginPage() {
           </Button>
           <div className="mt-4 text-center text-sm">
             Don't have an account?{' '}
-            <Link href="#" className="underline" prefetch={false}>
+            <Link href="#" className="underline text-primary" prefetch={false}>
               Sign up
             </Link>
           </div>
