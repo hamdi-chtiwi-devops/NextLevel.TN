@@ -134,8 +134,9 @@ export default function SignupPage() {
       </div>
       <Card className="w-full max-w-md shadow-2xl border-2 border-border/50">
         <CardHeader className="text-center space-y-4 pt-8">
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center gap-2">
             <Logo />
+            <span className="text-2xl font-bold font-headline">NextLevel.TN</span>
           </div>
           <CardTitle className="text-3xl font-headline">Create your Account</CardTitle>
           <CardDescription>Join NextLevel.TN and start learning</CardDescription>

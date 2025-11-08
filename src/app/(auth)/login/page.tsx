@@ -67,7 +67,7 @@ export default function LoginPage() {
     if (error.code === 'auth/configuration-not-found') {
         title = 'Configuration Error';
         description = 'Google Sign-In is not enabled. Please enable it in your Firebase project settings.'
-    } else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+    } else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
         title = 'Invalid Credentials';
         description = 'The email or password you entered is incorrect. Please try again.';
     } else if (error.code === 'auth/unauthorized-domain') {
@@ -112,10 +112,11 @@ export default function LoginPage() {
       </div>
       <Card className="w-full max-w-md shadow-2xl border-2 border-border/50">
         <CardHeader className="text-center space-y-4 pt-8">
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center gap-2">
             <Logo />
+            <span className="text-2xl font-bold font-headline">NextLevel.TN</span>
           </div>
-          <CardTitle className="text-3xl font-headline">Welcome to NextLevel.TN</CardTitle>
+          <CardTitle className="text-3xl font-headline">Welcome Back</CardTitle>
           <CardDescription>Sign in to access your learning dashboard</CardDescription>
         </CardHeader>
         <CardContent>

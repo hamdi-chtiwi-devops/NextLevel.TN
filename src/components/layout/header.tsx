@@ -45,7 +45,7 @@ export function Header() {
                   href="/dashboard"
                   className="mb-4 flex items-center gap-2 text-lg font-semibold"
                 >
-                  <Logo /> <span className="text-xl font-bold">NextLevel.TN</span>
+                  <Logo /> <span className="text-xl font-bold font-headline">NextLevel.TN</span>
                 </Link>
                 {navItems.map((item) => (
                   <Link
@@ -64,7 +64,7 @@ export function Header() {
             </SheetContent>
           </Sheet>
         ) : (
-           <Link href="/dashboard" className="flex items-center gap-2">
+           <Link href="/dashboard" className="flex items-center gap-0">
             <Logo />
             <span className="text-xl font-bold font-headline hidden lg:inline-block">NextLevel.TN</span>
           </Link>
