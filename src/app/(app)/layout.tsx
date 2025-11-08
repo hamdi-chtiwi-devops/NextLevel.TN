@@ -15,21 +15,25 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    // Only perform redirection on the client side after the user status is determined.
     if (isClient && user === null) {
       router.push('/login');
     }
   }, [user, router, isClient]);
-  
-  if (!isClient || user === undefined) {
-    return <div>Loading...</div>; // Or a proper loading spinner
-  }
 
-  if (user === null) {
-    // This state is transient while the redirect happens.
-    // Return a loading indicator to prevent rendering children.
+  // While waiting for the client to determine the auth state, show a loading indicator.
+  // This prevents content from flashing before a redirect.
+  if (!isClient || user === undefined) {
     return <div>Loading...</div>;
   }
 
+  // If the user is logged out, the useEffect above will trigger a redirect.
+  // Show a loading state during the brief redirect period.
+  if (user === null) {
+    return <div>Loading...</div>;
+  }
+
+  // If we reach this point, the user is authenticated. Render the app.
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />

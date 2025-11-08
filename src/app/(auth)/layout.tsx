@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   }, []);
 
   useEffect(() => {
-    // Only redirect if we are on the client and the user object is defined (not undefined)
+    // Only redirect if we are on the client and the user object is defined and not null.
     if (isClient && user) {
       router.push('/dashboard');
     }
@@ -22,7 +22,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   
   // While waiting for the client to mount and user status to be known, show a loading state.
   if (!isClient || user === undefined) {
-    return <div>Loading...</div>; // Or a proper loading spinner
+    return <div>Loading...</div>;
   }
 
   // If the user is logged in, they will be redirected. In the meantime, show loading.
