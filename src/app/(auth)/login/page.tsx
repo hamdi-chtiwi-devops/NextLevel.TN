@@ -60,6 +60,25 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const handleError = (error: any) => {
+    let title = 'Sign in failed.';
+    let description = error.message;
+
+    if (error.code === 'auth/configuration-not-found') {
+        title = 'Configuration Error';
+        description = 'Google Sign-In is not enabled. Please enable it in your Firebase project settings.'
+    } else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+        title = 'Invalid Credentials';
+        description = 'The email or password you entered is incorrect. Please try again.';
+    }
+
+    toast({
+        variant: 'destructive',
+        title: title,
+        description: description,
+    });
+  }
+
   const handleGoogleSignIn = async () => {
     if (!auth) return;
     const provider = new GoogleAuthProvider();
@@ -67,11 +86,7 @@ export default function LoginPage() {
       await signInWithPopup(auth, provider);
       router.push('/dashboard');
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Sign in failed.',
-        description: error.message,
-      });
+      handleError(error);
     }
   };
 
@@ -82,11 +97,7 @@ export default function LoginPage() {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
     } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: 'Sign in failed.',
-        description: error.message,
-      });
+      handleError(error);
     }
   };
 

@@ -76,10 +76,24 @@ export default function SignupPage() {
   };
 
   const handleError = (error: any) => {
+    let title = 'Sign up failed.';
+    let description = error.message;
+
+    if (error.code === 'auth/configuration-not-found') {
+        title = 'Configuration Error';
+        description = 'Google Sign-In is not enabled. Please enable it in your Firebase project settings.'
+    } else if (error.code === 'auth/email-already-in-use') {
+        title = 'Email in use';
+        description = 'This email address is already associated with an account. Please sign in instead.';
+    } else if (error.code === 'auth/weak-password') {
+        title = 'Weak Password';
+        description = 'Your password must be at least 6 characters long.';
+    }
+
     toast({
       variant: 'destructive',
-      title: 'Sign up failed.',
-      description: error.message,
+      title: title,
+      description: description,
     });
   };
 
