@@ -91,7 +91,11 @@ export default function SignupPage() {
     } else if (error.code === 'auth/unauthorized-domain') {
         title = 'Unauthorized Domain';
         description = 'This domain is not authorized for authentication. Please add it in your Firebase project settings.'
+    } else if (error.code === 'auth/operation-not-allowed') {
+        title = 'Sign-in method disabled';
+        description = 'Email/Password sign-up is not enabled. Please enable it in your Firebase project settings.';
     }
+
 
     toast({
       variant: 'destructive',
