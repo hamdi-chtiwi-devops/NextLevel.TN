@@ -34,7 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           setIsAdmin(true);
         } else {
           // Not an admin, redirect to student dashboard
-          router.push('/student/dashboard');
+          router.push('/dashboard');
         }
         setLoading(false);
       });

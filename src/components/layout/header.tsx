@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 
 const navItems = [
-  { href: '/student/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/courses', label: 'Courses', icon: BookOpen },
   { href: '/community', label: 'Community', icon: Users },
 ];
@@ -68,7 +68,7 @@ export function Header() {
             <SheetContent side="left" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
                 <Link
-                  href="/student/dashboard"
+                  href="/dashboard"
                   className="mb-4 flex items-center gap-2 text-lg font-semibold"
                 >
                   <Logo /> <span className="text-xl font-bold font-headline">NextLevel.TN</span>
@@ -79,7 +79,7 @@ export function Header() {
                     href={item.href}
                     className={cn(
                       'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-                      (pathname === item.href || (item.href !== '/student/dashboard' && pathname.startsWith(item.href))) && 'bg-muted text-primary'
+                      (pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))) && 'bg-muted text-primary'
                     )}
                   >
                     <item.icon className="h-4 w-4" />
@@ -90,7 +90,7 @@ export function Header() {
             </SheetContent>
           </Sheet>
         ) : (
-           <Link href="/student/dashboard" className="flex items-center gap-0">
+           <Link href="/dashboard" className="flex items-center gap-0">
             <Logo />
             <span className="text-xl font-bold font-headline hidden lg:inline-block">NextLevel.TN</span>
           </Link>
@@ -104,7 +104,7 @@ export function Header() {
                 href={item.href}
                 className={cn(
                     'transition-colors hover:text-foreground font-medium flex items-center gap-2',
-                    (pathname === item.href || (item.href !== '/student/dashboard' && pathname.startsWith(item.href))) ? 'text-foreground' : 'text-muted-foreground'
+                    (pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))) ? 'text-foreground' : 'text-muted-foreground'
                 )}
             >
                 {item.label}
