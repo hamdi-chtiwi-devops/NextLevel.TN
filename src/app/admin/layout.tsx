@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useUser, useFirestore } from '@/firebase';
@@ -10,17 +11,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const user = useUser();
   const firestore = useFirestore();
   const router = useRouter();
-  const [isClient, setIsClient] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
     if (user === null) {
       // Not logged in, redirect to login
       router.push('/login');
@@ -43,16 +37,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     } else {
       // User is defined but firestore isn't ready or some other issue
       setLoading(false);
+      router.push('/login');
     }
-  }, [user, firestore, router, isClient]);
+  }, [user, firestore, router]);
 
-  if (loading || !isClient || user === undefined) {
+  if (loading || !isAdmin) {
     return <div>Loading...</div>;
-  }
-  
-  if (!isAdmin) {
-    // This will show briefly while redirecting
-    return <div>Verifying permissions...</div>;
   }
 
   return (

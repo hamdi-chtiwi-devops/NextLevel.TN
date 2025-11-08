@@ -1,62 +1,32 @@
 
 'use client';
 
-import { useUser, useFirestore } from '@/firebase';
-import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, useState, type ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
+import type { ReactNode } from 'react';
 import { Header } from '@/components/layout/header';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 
 function AppContent({ children }: { children: ReactNode }) {
-  const user = useUser();
-  const firestore = useFirestore();
-  const router = useRouter();
   const pathname = usePathname();
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
+  
   const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
   const isAdminPage = pathname.startsWith('/admin');
-  const isPublicPage = isAuthPage;
+  const isRootPage = pathname === '/';
 
-  useEffect(() => {
-    if (!isClient) return;
-
-    if (user === null && !isPublicPage) {
-      router.push('/login');
-      return;
-    }
-
-    if (user && firestore && !isAdminPage) {
-      const userDocRef = doc(firestore, 'users', user.uid);
-      getDoc(userDocRef).then((docSnap) => {
-        if (docSnap.exists() && docSnap.data().role === 'Admin') {
-          router.push('/admin/dashboard');
-        }
-      });
-    }
-
-  }, [isClient, user, firestore, isPublicPage, isAdminPage, router, pathname]);
-
-  if (user === undefined && !isPublicPage) {
-    return <div>Loading...</div>; // Show loading screen while user state is being determined
-  }
+  // Only show the main layout for non-auth and non-admin pages
+  const showMainLayout = !isAuthPage && !isAdminPage && !isRootPage;
 
   return (
     <>
-      {isAuthPage || isAdminPage ? (
-        children
-      ) : (
+      {showMainLayout ? (
         <div className="flex min-h-screen flex-col bg-background">
           <Header />
           <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
         </div>
+      ) : (
+        children
       )}
       <Toaster />
     </>

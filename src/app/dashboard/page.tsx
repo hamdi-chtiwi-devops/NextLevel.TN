@@ -1,3 +1,4 @@
+
 'use client';
 import { EnrolledCourses } from '@/components/dashboard/enrolled-courses';
 import { ProgressOverview } from '@/components/dashboard/progress-overview';
@@ -27,7 +28,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (user === null) {
-      // user is logged out, layout will handle redirect
+      router.push('/login');
       return;
     }
     
@@ -37,11 +38,11 @@ export default function DashboardPage() {
         .then((docSnap) => {
           if (docSnap.exists()) {
             const profile = docSnap.data() as UserProfile;
+             if (profile.role === 'Admin') {
+                router.push('/admin/dashboard');
+                return;
+            }
             setUserProfile(profile);
-            // Redirection is now handled in layout.tsx
-            // if (profile.role === 'Admin') {
-            //     router.push('/admin/dashboard');
-            // }
           } else {
             setUserProfile({
                 name: user.displayName || 'Learner',
@@ -68,11 +69,6 @@ export default function DashboardPage() {
     return <WelcomeNewUser name={user?.displayName?.split(' ')[0] || 'learner'} />;
   }
   
-  // This check prevents flashing the student dashboard for admins during redirect
-  if (userProfile?.role === 'Admin') {
-    return <div>Redirecting to admin dashboard...</div>
-  }
-
   if (!userProfile) {
     return <div>Loading user profile...</div>
   }
