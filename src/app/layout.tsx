@@ -20,6 +20,7 @@ function AppContent({ children }: { children: ReactNode }) {
   }, []);
 
   const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
+  const isAdminPage = pathname.startsWith('/admin');
   const isPublicPage = isAuthPage;
 
   useEffect(() => {
@@ -36,7 +37,7 @@ function AppContent({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {isAuthPage ? (
+      {isAuthPage || isAdminPage ? (
         children
       ) : (
         <div className="flex min-h-screen flex-col bg-background">
