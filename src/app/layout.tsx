@@ -1,16 +1,18 @@
 
 'use client';
 
-import { useUser } from '@/firebase';
+import { useUser, useFirestore } from '@/firebase';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Header } from '@/components/layout/header';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 function AppContent({ children }: { children: ReactNode }) {
   const user = useUser();
+  const firestore = useFirestore();
   const router = useRouter();
   const pathname = usePathname();
   const [isClient, setIsClient] = useState(false);
@@ -24,13 +26,24 @@ function AppContent({ children }: { children: ReactNode }) {
   const isPublicPage = isAuthPage;
 
   useEffect(() => {
-    if (isClient && user === null && !isPublicPage) {
-      router.push('/login');
-    }
-  }, [isClient, user, isPublicPage, router, pathname]);
+    if (!isClient) return;
 
-  // Render the layout structure consistently on both server and client.
-  // The useEffect above will handle redirection on the client-side after hydration.
+    if (user === null && !isPublicPage) {
+      router.push('/login');
+      return;
+    }
+
+    if (user && firestore && !isAdminPage) {
+      const userDocRef = doc(firestore, 'users', user.uid);
+      getDoc(userDocRef).then((docSnap) => {
+        if (docSnap.exists() && docSnap.data().role === 'Admin') {
+          router.push('/admin/dashboard');
+        }
+      });
+    }
+
+  }, [isClient, user, firestore, isPublicPage, isAdminPage, router, pathname]);
+
   if (user === undefined && !isPublicPage) {
     return <div>Loading...</div>; // Show loading screen while user state is being determined
   }

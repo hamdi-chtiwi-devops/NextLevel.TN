@@ -26,6 +26,11 @@ export default function DashboardPage() {
   const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
+    if (user === null) {
+      // user is logged out, layout will handle redirect
+      return;
+    }
+    
     if (user && firestore) {
       const userDocRef = doc(firestore, 'users', user.uid);
       getDoc(userDocRef)
@@ -33,9 +38,10 @@ export default function DashboardPage() {
           if (docSnap.exists()) {
             const profile = docSnap.data() as UserProfile;
             setUserProfile(profile);
-            if (profile.role === 'Admin') {
-                router.push('/admin/dashboard');
-            }
+            // Redirection is now handled in layout.tsx
+            // if (profile.role === 'Admin') {
+            //     router.push('/admin/dashboard');
+            // }
           } else {
             setUserProfile({
                 name: user.displayName || 'Learner',
@@ -48,9 +54,9 @@ export default function DashboardPage() {
         .finally(() => {
           setLoading(false);
         });
-    } else if (user === null) {
-        // user is logged out
-        router.push('/login');
+    } else if (user === undefined) {
+      // Auth state still loading
+      setLoading(true);
     }
   }, [user, firestore, router]);
 
@@ -62,6 +68,11 @@ export default function DashboardPage() {
     return <WelcomeNewUser name={user?.displayName?.split(' ')[0] || 'learner'} />;
   }
   
+  // This check prevents flashing the student dashboard for admins during redirect
+  if (userProfile?.role === 'Admin') {
+    return <div>Redirecting to admin dashboard...</div>
+  }
+
   if (!userProfile) {
     return <div>Loading user profile...</div>
   }
