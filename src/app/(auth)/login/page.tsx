@@ -70,7 +70,11 @@ export default function LoginPage() {
     } else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
         title = 'Invalid Credentials';
         description = 'The email or password you entered is incorrect. Please try again.';
+    } else if (error.code === 'auth/unauthorized-domain') {
+        title = 'Unauthorized Domain';
+        description = 'This domain is not authorized for authentication. Please add it in your Firebase project settings.'
     }
+
 
     toast({
         variant: 'destructive',

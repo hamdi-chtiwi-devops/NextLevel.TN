@@ -88,6 +88,9 @@ export default function SignupPage() {
     } else if (error.code === 'auth/weak-password') {
         title = 'Weak Password';
         description = 'Your password must be at least 6 characters long.';
+    } else if (error.code === 'auth/unauthorized-domain') {
+        title = 'Unauthorized Domain';
+        description = 'This domain is not authorized for authentication. Please add it in your Firebase project settings.'
     }
 
     toast({
