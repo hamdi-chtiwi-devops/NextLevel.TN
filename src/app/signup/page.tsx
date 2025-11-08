@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -79,7 +80,7 @@ export default function SignupPage() {
   const handleSuccess = async (user: import('firebase/auth').User) => {
     if (!firestore) return;
     
-    const isAdmin = user.email === 'admin@nextlevel.tn';
+    const isAdmin = user.email === 'admin@admin.com';
 
     const userProfile = {
       name: user.displayName,
@@ -189,7 +190,7 @@ export default function SignupPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="student@email.com or admin@nextlevel.tn"
+                  placeholder="student@email.com or admin@admin.com"
                   required
                   className="pl-10"
                   value={email}
