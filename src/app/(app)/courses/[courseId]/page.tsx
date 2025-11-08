@@ -7,7 +7,7 @@ import { CourseQuiz } from '@/components/courses/course-quiz';
 import { CourseForum } from '@/components/courses/course-forum';
 import { BookOpen, HelpCircle, MessageSquare } from 'lucide-react';
 
-export default function CourseDetailPage({ params }: { params: { courseId: string } }) {
+export default async function CourseDetailPage({ params }: { params: { courseId: string } }) {
   const course = mockCourses.find((c) => c.id === params.courseId);
 
   if (!course) {
