@@ -1,9 +1,17 @@
+'use client';
+
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { useSidebar } from '@/components/ui/sidebar';
 
 export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
+  const { state } = useSidebar();
+  
   return (
-    <div className="flex items-center justify-center gap-2 group-data-[collapsible=icon]:justify-start" >
+    <div className={cn(
+        "flex items-center gap-2", 
+        state === 'collapsed' ? 'justify-center' : ''
+    )}>
         <svg
         width="32"
         height="32"
@@ -27,7 +35,9 @@ export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
             fill="white"
         />
         </svg>
-        <span className="text-2xl font-bold font-headline text-foreground group-data-[collapsible=icon]:hidden">NextLevel.TN</span>
+        {state === 'expanded' && (
+            <span className="text-2xl font-bold font-headline text-foreground">NextLevel.TN</span>
+        )}
     </div>
 
   );

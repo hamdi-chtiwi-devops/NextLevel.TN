@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
   SidebarSeparator,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Logo } from '@/components/logo';
@@ -37,11 +38,12 @@ const bottomMenuItems = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { state } = useSidebar();
 
   return (
     <>
       <SidebarHeader>
-        <div className="p-2">
+        <div className="p-4">
             <Logo />
         </div>
       </SidebarHeader>
@@ -65,7 +67,7 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 mt-auto">
+      <SidebarFooter>
         <SidebarMenu>
           {bottomMenuItems.map((item) => (
             <SidebarMenuItem key={item.href}>
@@ -90,11 +92,15 @@ export function AppSidebar() {
                         <AvatarImage src={mockUser.avatar} alt={mockUser.name} />
                         <AvatarFallback>{mockUser.name.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <div className="flex flex-col items-start truncate group-data-[collapsible=icon]:hidden">
-                        <span className="font-semibold">{mockUser.name}</span>
-                        <span className="text-xs text-muted-foreground">{mockUser.role}</span>
-                    </div>
-                    <ChevronUp className="ml-auto h-4 w-4 shrink-0 opacity-50 group-data-[collapsible=icon]:hidden" />
+                    {state === 'expanded' && (
+                        <div className="flex flex-col items-start truncate">
+                            <span className="font-semibold">{mockUser.name}</span>
+                            <span className="text-xs text-muted-foreground">{mockUser.role}</span>
+                        </div>
+                    )}
+                    {state === 'expanded' && (
+                        <ChevronUp className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+                    )}
                 </button>
             </PopoverTrigger>
             <PopoverContent className="w-56 p-1 mb-2">

@@ -5,7 +5,7 @@ import { Sidebar, SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="min-h-screen bg-background">
+      <div className="flex min-h-screen bg-background">
         <Sidebar>
           <AppSidebar />
         </Sidebar>
