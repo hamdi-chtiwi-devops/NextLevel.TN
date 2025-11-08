@@ -3,8 +3,9 @@ import { type Course } from '@/lib/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, Star, Users } from 'lucide-react';
+import { Clock, Star, Users, Award } from 'lucide-react';
 import { findImage } from '@/lib/placeholder-images';
+import { CourseCertificate } from './course-certificate';
 
 export function CourseHeader({ course }: { course: Course }) {
   const instructorAvatar = findImage('avatar-3'); 
@@ -49,9 +50,12 @@ export function CourseHeader({ course }: { course: Course }) {
             <span>{course.duration}</span>
           </div>
         </div>
-        <Button size="lg" className="w-full sm:w-auto">
-          Enroll Now {course.price && `for $${course.price}`}
-        </Button>
+        <div className="flex items-center gap-4">
+            <Button size="lg" className="w-full sm:w-auto">
+                Enroll Now {course.price && `for $${course.price}`}
+            </Button>
+            <CourseCertificate course={course} />
+        </div>
       </div>
     </div>
   );
