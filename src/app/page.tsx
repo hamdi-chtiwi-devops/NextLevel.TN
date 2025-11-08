@@ -50,7 +50,7 @@ export default function LoginPage() {
           <div className="flex justify-center">
             <Logo />
           </div>
-          <CardTitle className="text-3xl font-headline">Welcome to AcademiAI</CardTitle>
+          <CardTitle className="text-3xl font-headline">Welcome to NextLevel.TN</CardTitle>
           <CardDescription>Sign in to access your learning dashboard</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

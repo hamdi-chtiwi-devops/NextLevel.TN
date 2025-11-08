@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'AcademiAI',
+  title: 'NextLevel.TN',
   description: 'A modern, intelligent, and fully managed e-learning platform.',
 };
 

@@ -25,7 +25,7 @@ export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
             fill="white"
         />
         </svg>
-        <span className="text-2xl font-bold font-headline text-foreground">AcademiAI</span>
+        <span className="text-2xl font-bold font-headline text-foreground">NextLevel.TN</span>
     </div>
 
   );
