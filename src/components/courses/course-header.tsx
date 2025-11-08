@@ -10,21 +10,21 @@ export function CourseHeader({ course }: { course: Course }) {
   const instructorAvatar = findImage('avatar-3'); 
 
   return (
-    <div className="grid md:grid-cols-3 gap-8 items-start">
+    <div className="grid md:grid-cols-3 gap-6 md:gap-8 items-start">
       <div className="md:col-span-1">
         <Image
           src={course.thumbnail}
           alt={course.title}
           width={600}
           height={400}
-          className="rounded-lg shadow-lg w-full object-cover"
+          className="rounded-lg shadow-lg w-full aspect-[3/2] object-cover"
           data-ai-hint="course thumbnail"
         />
       </div>
       <div className="md:col-span-2 space-y-4">
         <Badge variant="secondary">{course.category}</Badge>
-        <h1 className="text-4xl font-bold font-headline">{course.title}</h1>
-        <p className="text-lg text-muted-foreground">{course.description}</p>
+        <h1 className="text-3xl md:text-4xl font-bold font-headline">{course.title}</h1>
+        <p className="text-base md:text-lg text-muted-foreground">{course.description}</p>
         <div className="flex items-center gap-4">
           <Avatar>
             <AvatarImage src={instructorAvatar} />
@@ -35,7 +35,7 @@ export function CourseHeader({ course }: { course: Course }) {
             <p className="text-primary font-medium">{course.instructor}</p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <Star className="w-4 h-4 text-amber-500" />
             <span>{course.rating} rating</span>
