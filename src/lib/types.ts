@@ -6,6 +6,13 @@ export type User = {
   role: 'Student' | 'Instructor' | 'Admin';
 };
 
+export type UserProfile = {
+  id: string;
+  name: string;
+  email: string;
+  role: 'Student' | 'Admin';
+}
+
 export type Course = {
   id: string;
   title: string;
