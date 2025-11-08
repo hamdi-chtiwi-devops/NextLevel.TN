@@ -2,11 +2,16 @@
 
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const user = useUser();
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -14,7 +19,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     }
   }, [user, router]);
   
-  if (user === undefined) {
+  if (!isClient || user === undefined) {
     return <div>Loading...</div>; // Or a proper loading spinner
   }
 

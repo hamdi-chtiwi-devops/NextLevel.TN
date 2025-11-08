@@ -3,11 +3,16 @@
 import { Header } from '@/components/layout/header';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const user = useUser();
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (user === null) {
@@ -15,7 +20,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
   }, [user, router]);
   
-  if (user === undefined || user === null) {
+  if (!isClient || user === undefined) {
+    return <div>Loading...</div>; // Or a proper loading spinner
+  }
+
+  if (user === null) {
     return <div>Loading...</div>; // Or a proper loading spinner
   }
 
