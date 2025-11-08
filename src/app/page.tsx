@@ -14,25 +14,39 @@ export default function RootPage() {
 
   useEffect(() => {
     // Prevent multiple redirects
-    if (!user || !firestore || hasRedirected) {
-        if (user === null) {
-            router.push('/login');
-        }
+    if (hasRedirected) {
       return;
     }
 
-    const userDocRef = doc(firestore, 'users', user.uid);
-    getDoc(userDocRef).then((docSnap) => {
+    if (user === undefined) {
+      // Auth state is still loading, wait.
+      return;
+    }
+
+    if (user === null) {
+      // User is not logged in, send to login page.
       setHasRedirected(true);
-      if (docSnap.exists() && docSnap.data().role === 'Admin') {
-        router.push('/admin/dashboard');
-      } else {
-        router.push('/dashboard');
-      }
-    }).catch(() => {
+      router.push('/login');
+      return;
+    }
+
+    if (user && firestore) {
+      // User is logged in, check their role.
+      const userDocRef = doc(firestore, 'users', user.uid);
+      getDoc(userDocRef).then((docSnap) => {
+        setHasRedirected(true);
+        if (docSnap.exists() && docSnap.data().role === 'Admin') {
+          router.push('/admin/dashboard');
+        } else {
+          // Default to student dashboard if role is not Admin or doc doesn't exist
+          router.push('/dashboard');
+        }
+      }).catch(() => {
+        // If there's an error fetching the doc, still redirect to a safe default.
         setHasRedirected(true);
         router.push('/dashboard');
-    });
+      });
+    }
 
   }, [user, firestore, router, hasRedirected]);
 

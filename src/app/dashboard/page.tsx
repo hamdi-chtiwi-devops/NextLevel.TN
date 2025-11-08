@@ -27,6 +27,10 @@ export default function DashboardPage() {
   const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
+    if (user === undefined) {
+      // Auth state still loading
+      return;
+    }
     if (user === null) {
       router.push('/login');
       return;
@@ -38,12 +42,14 @@ export default function DashboardPage() {
         .then((docSnap) => {
           if (docSnap.exists()) {
             const profile = docSnap.data() as UserProfile;
-             if (profile.role === 'Admin') {
+             // This page is only for students. Admins are redirected by the root page.
+            if (profile.role === 'Admin') {
                 router.push('/admin/dashboard');
                 return;
             }
             setUserProfile(profile);
           } else {
+             // New user, show welcome screen
             setUserProfile({
                 name: user.displayName || 'Learner',
                 email: user.email || '',
@@ -55,9 +61,6 @@ export default function DashboardPage() {
         .finally(() => {
           setLoading(false);
         });
-    } else if (user === undefined) {
-      // Auth state still loading
-      setLoading(true);
     }
   }, [user, firestore, router]);
 
@@ -70,6 +73,7 @@ export default function DashboardPage() {
   }
   
   if (!userProfile) {
+    // This can happen briefly during redirects or if the user doc is missing.
     return <div>Loading user profile...</div>
   }
 

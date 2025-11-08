@@ -73,7 +73,7 @@ export default function SignupPage() {
 
   useEffect(() => {
     if (isClient && user) {
-        router.push('/dashboard');
+        router.push('/');
     }
   }, [user, router, isClient]);
 
@@ -88,7 +88,7 @@ export default function SignupPage() {
       role: isAdmin ? 'Admin' : 'Student',
     };
     await setDoc(doc(firestore, 'users', user.uid), userProfile);
-    router.push('/dashboard');
+    router.push('/');
   };
 
   const handleError = (error: any) => {

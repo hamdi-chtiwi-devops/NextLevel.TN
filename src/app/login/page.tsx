@@ -68,7 +68,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isClient && user) {
-        router.push('/dashboard');
+        router.push('/');
     }
   }, [user, router, isClient]);
 
@@ -100,7 +100,7 @@ export default function LoginPage() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      router.push('/dashboard');
+      router.push('/');
     } catch (error: any) {
       handleError(error);
     }
@@ -111,7 +111,7 @@ export default function LoginPage() {
     if (!auth) return;
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push('/dashboard');
+      router.push('/');
     } catch (error: any) {
       handleError(error);
     }
