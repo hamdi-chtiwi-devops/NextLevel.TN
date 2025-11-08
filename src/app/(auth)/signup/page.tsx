@@ -66,10 +66,14 @@ export default function SignupPage() {
 
   const handleSuccess = async (user: import('firebase/auth').User) => {
     if (!firestore) return;
+    
+    // Check if the user is the designated admin
+    const isAdmin = user.email === 'admin@nextlevel.tn';
+
     const userProfile = {
       name: user.displayName,
       email: user.email,
-      role: 'Student', // Default role
+      role: isAdmin ? 'Admin' : 'Student', // Assign role based on email
     };
     await setDoc(doc(firestore, 'users', user.uid), userProfile);
     router.push('/dashboard');
@@ -121,7 +125,8 @@ export default function SignupPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
-      await handleSuccess(userCredential.user);
+      const userWithDisplayName = { ...userCredential.user, displayName: name };
+      await handleSuccess(userWithDisplayName);
     } catch (error) {
       handleError(error);
     }
@@ -165,7 +170,7 @@ export default function SignupPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="student@email.com"
+                  placeholder="student@email.com or admin@nextlevel.tn"
                   required
                   className="pl-10"
                   value={email}
