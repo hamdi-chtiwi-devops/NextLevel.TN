@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { WelcomeNewUser } from './welcome-new-user';
+import { AIGeneratedQuiz } from './ai-generated-quiz';
+import { AIQnA } from './ai-qna';
 
 type UserProfile = {
   name: string;
@@ -83,10 +85,12 @@ export function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <EnrolledCourses />
+          <AIGeneratedQuiz />
         </div>
         <div className="lg:col-span-1 space-y-8">
           <ProgressOverview />
           <Recommendations />
+          <AIQnA />
         </div>
       </div>
     </div>
