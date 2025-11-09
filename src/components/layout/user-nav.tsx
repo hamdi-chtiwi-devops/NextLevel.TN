@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -66,9 +67,11 @@ export function UserNav() {
               <span>Profile</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>Billing</span>
+          <DropdownMenuItem asChild>
+            <Link href="/pricing">
+                <CreditCard className="mr-2 h-4 w-4" />
+                <span>Billing</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
              <Link href="/profile">
