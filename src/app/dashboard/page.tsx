@@ -7,10 +7,11 @@ import { useUser, useFirestore } from '@/firebase';
 import { Badge } from '@/components/ui/badge';
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { WelcomeNewUser } from '@/components/dashboard/welcome-new-user';
 import { AIGeneratedQuiz } from '@/components/dashboard/ai-generated-quiz';
 import { AIQnA } from '@/components/dashboard/ai-qna';
 import { useRouter } from 'next/navigation';
+import { Welcome } from '@/components/dashboard/welcome';
+import { mockCourses } from '@/lib/data';
 
 type UserProfile = {
   name: string;
@@ -24,11 +25,13 @@ export default function DashboardPage() {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isNewUser, setIsNewUser] = useState(false);
+
+  // For this example, we'll assume the first two mock courses are enrolled.
+  // In a real app, this would come from a user's data.
+  const enrolledCourses = mockCourses.slice(0, 0); // Start with 0 enrolled courses to show welcome
 
   useEffect(() => {
     if (user === undefined) {
-      // Auth state still loading
       return;
     }
     if (user === null) {
@@ -44,13 +47,12 @@ export default function DashboardPage() {
             const profile = docSnap.data() as UserProfile;
             setUserProfile(profile);
           } else {
-             // New user, show welcome screen
+             // New user, create a temporary profile from auth details
             setUserProfile({
                 name: user.displayName || 'Learner',
                 email: user.email || '',
                 role: 'Student'
             });
-            setIsNewUser(true);
           }
         })
         .finally(() => {
@@ -63,16 +65,16 @@ export default function DashboardPage() {
     return <div>Loading...</div>;
   }
   
-  if (isNewUser) {
-    return <WelcomeNewUser name={user?.displayName?.split(' ')[0] || 'learner'} />;
-  }
-  
   if (!userProfile) {
     // This can happen briefly during redirects or if the user doc is missing.
     return <div>Loading user profile...</div>
   }
 
   const firstName = userProfile?.name.split(' ')[0] || 'Learner';
+  
+  if (enrolledCourses.length === 0) {
+    return <Welcome name={firstName} />;
+  }
 
   return (
     <div className="space-y-8">
