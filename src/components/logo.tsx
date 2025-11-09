@@ -15,23 +15,27 @@ export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
         {...props}
       >
         <g>
-          {/* Central Blue Arrow */}
-          <path d="M50 15 L62 40 L50 40 L50 65 L49 65 L49 40 L38 40 Z" fill="#25A0E8" />
-          
-          {/* Left dark shape */}
-          <path d="M36 42 L36 68 L25 58 Z" fill="#1E2A4D" />
-          
-          {/* Left orange shape */}
-          <path d="M38 42 L38 65 L30 59 Z" fill="#F37F30" />
-          
-          {/* Right dark shape */}
-          <path d="M64 42 L64 68 L75 58 Z" fill="#1E2A4D" />
-          
-          {/* Right orange shape */}
-          <path d="M62 42 L62 65 L70 59 Z" fill="#F37F30" />
-
-          {/* Bottom orange V */}
-          <path d="M45 88 L50 82 L55 88 L52 88 L50 85 L48 88 Z" fill="#F37F30" />
+            <path
+                d="M62.5,25C52.5,25 45,40 45,50C45,60 52.5,75 62.5,75"
+                stroke="#1E88E5"
+                strokeWidth="15"
+                strokeLinecap="round"
+                fill="none"
+            />
+            <path
+                d="M37.5,75C47.5,75 55,60 55,50C55,40 47.5,25 37.5,25"
+                stroke="#FF8F00"
+                strokeWidth="15"
+                strokeLinecap="round"
+                fill="none"
+            />
+             <path
+                d="M45,50 C45,57.5 49,65 55,65"
+                stroke="#1565C0"
+                strokeWidth="15"
+                strokeLinecap="round"
+                fill="none"
+            />
         </g>
       </svg>
     </div>
