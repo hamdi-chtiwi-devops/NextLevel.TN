@@ -21,7 +21,7 @@
     {
       "id": "avatar-4",
       "description": "User avatar 4",
-      "imageUrl": "https://images.unsplash.com/photo-1687092084146-a2893f0b896a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYW4lMjBnbGFzc2VzfGVufDB8fHx8MTc2MjYwNzM4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "man glasses"
     },
     {
@@ -68,9 +68,21 @@
     },
     {
       "id": "dashboard-hero-1",
-      "description": "Web development programmer interacting with futuristic digital interfaces",
-      "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-interacting-with-futuristic-digital-interfaces_933563-3663.jpg?w=826&q=80",
-      "imageHint": "web development"
+      "description": "Person coding on a laptop in a focused environment",
+      "imageUrl": "https://images.unsplash.com/photo-1555066931-4365d1469488?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "person coding"
+    },
+    {
+      "id": "dashboard-hero-2",
+      "description": "Illustration of a glowing lightbulb, symbolizing new ideas and learning.",
+      "imageUrl": "https://images.unsplash.com/photo-1589578236836-699be8f94e5a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "glowing lightbulb"
+    },
+    {
+      "id": "dashboard-hero-3",
+      "description": "Symbolic image of a person climbing a staircase of books, representing growth and progress.",
+      "imageUrl": "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "person learning"
     }
   ]
 }

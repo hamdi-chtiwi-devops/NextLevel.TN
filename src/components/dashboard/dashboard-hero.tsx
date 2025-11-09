@@ -8,53 +8,79 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import Autoplay from 'embla-carousel-autoplay';
+import { Card } from '@/components/ui/card';
 import { findImage } from '@/lib/placeholder-images';
 
-export function DashboardHero() {
-  const heroImage = findImage('dashboard-hero-1');
+const motivationalSlides = [
+    {
+      id: 'slide1',
+      title: 'The journey of a thousand miles begins with a single step.',
+      subtitle: 'Start a new course today and unlock your potential.',
+      image: findImage('dashboard-hero-1'),
+      imageHint: 'person coding',
+    },
+    {
+      id: 'slide2',
+      title: 'Knowledge is power.',
+      subtitle: 'Every module you complete makes you stronger.',
+      image: findImage('dashboard-hero-2'),
+      imageHint: 'glowing lightbulb',
+    },
+    {
+      id: 'slide3',
+      title: 'Learn, Grow, Succeed.',
+      subtitle: 'Our platform is designed to help you achieve your goals.',
+      image: findImage('dashboard-hero-3'),
+      imageHint: 'person climbing stairs',
+    },
+  ];
 
+export function DashboardHero() {
   return (
     <Carousel
       className="w-full"
+      plugins={[
+        Autoplay({
+          delay: 5000,
+          stopOnInteraction: true,
+        }),
+      ]}
       opts={{
         align: 'start',
         loop: true,
       }}
     >
       <CarouselContent>
-        <CarouselItem>
-          <Card className="overflow-hidden border-none bg-transparent">
-            <div className="grid md:grid-cols-2 items-center">
-              <div className="p-8 md:p-12 order-2 md:order-1">
-                <h2 className="text-3xl md:text-4xl font-bold font-headline mb-4">
-                  Go further in web development
-                </h2>
-                <p className="text-muted-foreground mb-6">
-                  Subscribe to a collection of our top courses in Javascript,
-                  CSS, React, and more with Personal Plan.
-                </p>
-                <Button size="lg">Get started</Button>
-              </div>
-              <div className="relative order-1 md:order-2 h-64 md:h-full min-h-[300px]">
-                <div className="absolute inset-0 bg-gradient-to-l from-background to-transparent md:hidden"></div>
-                 <Image
-                  src={heroImage}
-                  alt="Web development programmer illustration"
-                  fill
-                  className="object-cover"
-                  data-ai-hint="web development"
-                />
-                <div className="absolute inset-y-0 right-0 w-1/4 bg-background hidden md:block"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
-              </div>
-            </div>
-          </Card>
-        </CarouselItem>
+        {motivationalSlides.map((slide) => (
+             <CarouselItem key={slide.id}>
+                <Card className="overflow-hidden border-2 rounded-xl shadow-lg">
+                    <div className="grid md:grid-cols-2 items-center bg-card">
+                        <div className="p-8 md:p-12 order-2 md:order-1">
+                            <h2 className="text-2xl md:text-3xl font-bold font-headline mb-3 leading-tight">
+                            {slide.title}
+                            </h2>
+                            <p className="text-muted-foreground">
+                            {slide.subtitle}
+                            </p>
+                        </div>
+                        <div className="relative order-1 md:order-2 h-64 md:h-80">
+                            <Image
+                            src={slide.image}
+                            alt={slide.title}
+                            fill
+                            className="object-cover"
+                            data-ai-hint={slide.imageHint}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent"></div>
+                        </div>
+                    </div>
+                </Card>
+           </CarouselItem>
+        ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2" />
-      <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2" />
+      <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 hidden sm:flex" />
+      <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 hidden sm:flex" />
     </Carousel>
   );
 }
