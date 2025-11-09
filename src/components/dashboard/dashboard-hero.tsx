@@ -41,10 +41,10 @@ export function DashboardHero() {
                 <div className="absolute inset-0 bg-gradient-to-l from-background to-transparent md:hidden"></div>
                  <Image
                   src={heroImage}
-                  alt="A smiling student holding a laptop"
+                  alt="Web development programmer illustration"
                   fill
                   className="object-cover"
-                  data-ai-hint="smiling student"
+                  data-ai-hint="web development"
                 />
                 <div className="absolute inset-y-0 right-0 w-1/4 bg-background hidden md:block"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
