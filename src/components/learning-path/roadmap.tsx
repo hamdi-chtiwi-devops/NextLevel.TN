@@ -7,7 +7,6 @@ import { Badge } from '../ui/badge';
 import Link from 'next/link';
 import { Youtube, Clock, Code, ShieldCheck, Database, Server } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { TechIcon } from './tech-icon';
 
 type Step = YouTubePlaylist & {
     icon?: React.ElementType;
@@ -84,10 +83,10 @@ export function Roadmap({ title, description, category, steps }: RoadmapProps) {
                   {/* Content Card */}
                   <div className={cn("w-full rounded-xl border p-4 transition-all hover:shadow-md hover:-translate-y-0.5", colorClass)}>
                       <div className="flex items-center gap-4 mb-2">
-                        <TechIcon title={step.title} />
+                        <Code className="h-8 w-8" />
                         <p className="font-bold font-headline text-lg text-foreground">{step.title}</p>
                       </div>
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3 pl-10">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3 pl-12">
                         <span className="flex items-center gap-1.5">
                           <Youtube className="w-4 h-4" />
                           {step.author}
@@ -97,7 +96,7 @@ export function Roadmap({ title, description, category, steps }: RoadmapProps) {
                           {step.duration}
                         </span>
                       </div>
-                      <div className="pl-10">
+                      <div className="pl-12">
                         <Button asChild variant="secondary" size="sm" className="bg-background/70 border">
                             <Link href={step.url} target="_blank" rel="noopener noreferrer">
                             Watch on YouTube
