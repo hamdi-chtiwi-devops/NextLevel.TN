@@ -32,7 +32,7 @@ const motivationalSlides = [
       title: 'Learn, Grow, Succeed.',
       subtitle: 'Our platform is designed to help you achieve your goals.',
       image: findImage('dashboard-hero-3'),
-      imageHint: 'person climbing stairs',
+      imageHint: 'person learning',
     },
   ];
 
