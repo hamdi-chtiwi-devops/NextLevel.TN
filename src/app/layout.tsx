@@ -13,10 +13,19 @@ function AppContent({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   
   const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
-  const isRootPage = pathname === '/';
+  const isLandingPage = pathname === '/';
 
-  // Only show the main layout for non-auth and non-admin pages
-  const showMainLayout = !isAuthPage && !isRootPage;
+  // Only show the main layout for non-auth and non-landing pages
+  const showMainLayout = !isAuthPage && !isLandingPage;
+
+  if (isLandingPage) {
+    return (
+        <>
+            {children}
+            <Toaster />
+        </>
+    )
+  }
 
   return (
     <>

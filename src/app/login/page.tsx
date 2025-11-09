@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Mail, Lock } from 'lucide-react';
-import { useAuth, useUser } from '@/firebase';
+import { useAuth } from '@/firebase';
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
@@ -24,6 +24,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuthRedirect } from '@/hooks/use-auth-redirect';
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -56,25 +57,11 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export default function LoginPage() {
   const auth = useAuth();
-  const user = useUser();
   const router = useRouter();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isClient, setIsClient] = useState(false);
-
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-
-  useEffect(() => {
-    if (isClient && user) {
-        router.push('/dashboard');
-    }
-  }, [user, isClient, router]);
-  
+  const { isLoading } = useAuthRedirect();
 
   const handleError = (error: any) => {
     let title = 'Sign in failed.';
@@ -103,8 +90,10 @@ export default function LoginPage() {
     if (!auth) return;
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      // The useEffect hook will handle the redirect
+      const result = await signInWithPopup(auth, provider);
+      if (result.user) {
+        router.push('/dashboard');
+      }
     } catch (error: any) {
       handleError(error);
     }
@@ -115,27 +104,27 @@ export default function LoginPage() {
     if (!auth) return;
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // The useEffect hook will handle the redirect
+      router.push('/dashboard');
     } catch (error: any) {
       handleError(error);
     }
   };
   
-  if (!isClient || user === undefined || user) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background p-4 sm:p-6 md:p-8">
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
-        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] dark:bg-background">
+        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,hsl(var(--primary)/0.1),transparent)]"></div>
       </div>
       <Card className="w-full max-w-md shadow-2xl border-2 border-border/50">
         <CardHeader className="text-center space-y-4 pt-8">
-          <div className="flex justify-center items-center gap-2">
+          <Link href="/" className="flex justify-center items-center gap-2">
             <Logo />
             <span className="text-2xl font-bold font-headline">NextLevel.TN</span>
-          </div>
+          </Link>
           <CardTitle className="text-3xl font-headline">Welcome Back</CardTitle>
           <CardDescription>Sign in to access your learning dashboard</CardDescription>
         </CardHeader>

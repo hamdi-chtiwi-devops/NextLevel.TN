@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Mail, Lock, User as UserIcon } from 'lucide-react';
-import { useAuth, useFirestore, useUser } from '@/firebase';
+import { useAuth, useFirestore } from '@/firebase';
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -24,9 +24,10 @@ import {
   type User as FirebaseUser,
 } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
+import { useAuthRedirect } from '@/hooks/use-auth-redirect';
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -59,23 +60,16 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export default function SignupPage() {
   const auth = useAuth();
-  const user = useUser();
   const firestore = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isClient, setIsClient] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const { isLoading } = useAuthRedirect();
   
   const handleSuccess = async (createdUser: FirebaseUser) => {
     if (!firestore || !createdUser) return;
-    setIsRedirecting(true);
     
     const userProfile = {
       name: createdUser.displayName,
@@ -87,12 +81,6 @@ export default function SignupPage() {
     
     router.push('/dashboard');
   };
-
-  useEffect(() => {
-    if (isClient && user) {
-        handleSuccess(user);
-    }
-  }, [user, isClient, firestore, router]);
 
   const handleError = (error: any) => {
     let title = 'Sign up failed.';
@@ -126,8 +114,8 @@ export default function SignupPage() {
     if (!auth) return;
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
-      // The useEffect will handle the redirect on user state change
+      const result = await signInWithPopup(auth, provider);
+      await handleSuccess(result.user);
     } catch (error) {
       handleError(error);
     }
@@ -139,27 +127,32 @@ export default function SignupPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
-      // The useEffect will handle the redirect on user state change
+      // Reload user to get the latest profile info, then handle success
+      await userCredential.user.reload();
+      const updatedUser = auth.currentUser;
+      if (updatedUser) {
+        await handleSuccess(updatedUser);
+      }
     } catch (error) {
       handleError(error);
     }
   };
 
-  if (!isClient || user === undefined || isRedirecting || user) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-background p-4 sm:p-6 md:p-8">
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
-        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] dark:bg-background">
+        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,hsl(var(--primary)/0.1),transparent)]"></div>
       </div>
       <Card className="w-full max-w-md shadow-2xl border-2 border-border/50">
         <CardHeader className="text-center space-y-4 pt-8">
-          <div className="flex justify-center items-center gap-2">
+          <Link href="/" className="flex justify-center items-center gap-2">
             <Logo />
             <span className="text-2xl font-bold font-headline">NextLevel.TN</span>
-          </div>
+          </Link>
           <CardTitle className="text-3xl font-headline">Create your Account</CardTitle>
           <CardDescription>Join NextLevel.TN and start learning</CardDescription>
         </CardHeader>
