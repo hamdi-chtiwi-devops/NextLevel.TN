@@ -59,3 +59,19 @@ export type StudentProgress = {
   totalLessons: number;
   quizScores: { lessonId: string; score: number }[];
 };
+
+export type LearningPath = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  playlists: YouTubePlaylist[];
+};
+
+export type YouTubePlaylist = {
+  id: string;
+  title: string;
+  author: string;
+  url: string;
+  duration: string;
+};

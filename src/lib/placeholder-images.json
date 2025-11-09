@@ -61,6 +61,24 @@
       "imageHint": "security lock"
     },
     {
+      "id": "course-7",
+      "description": "DevOps Course Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1629813254921-755d91456b37?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "automation pipeline"
+    },
+    {
+      "id": "course-8",
+      "description": "Kubernetes Course Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1652796285093-9c445655469e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "cloud containers"
+    },
+    {
+      "id": "course-9",
+      "description": "Python Course Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "python code"
+    },
+    {
       "id": "profile-avatar",
       "description": "User profile avatar",
       "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBwZXJzb258ZW58MHx8fHwxNzYyNTY5NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -74,15 +92,15 @@
     },
     {
       "id": "dashboard-hero-2",
-      "description": "Developer interacting with floating code windows.",
+      "description": "A glowing lightbulb symbolizing ideas and knowledge.",
       "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg",
-      "imageHint": "developer augmented reality"
+      "imageHint": "glowing lightbulb"
     },
     {
       "id": "dashboard-hero-3",
-      "description": "Developer interacting with floating code windows.",
+      "description": "A person focused on learning at a computer.",
       "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg",
-      "imageHint": "developer augmented reality"
+      "imageHint": "person learning"
     }
   ]
 }

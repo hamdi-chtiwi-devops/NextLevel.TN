@@ -1,4 +1,4 @@
-import type { User, Course, ForumPost } from './types';
+import type { User, Course, ForumPost, LearningPath } from './types';
 import { findImage } from './placeholder-images';
 
 export const mockUser: User = {
@@ -80,9 +80,9 @@ export const mockCourses: Course[] = [
   },
   {
     id: '5',
-    title: 'Introduction to Machine Learning',
-    description: 'Learn the fundamentals of machine learning and build your first models.',
-    category: 'Data Science',
+    title: 'Advanced JavaScript: The Next Level',
+    description: 'Dive deep into modern JavaScript, including asynchronous patterns, performance optimization, and advanced concepts.',
+    category: 'Web Development',
     instructor: 'Sarah Johnson',
     instructorId: 'inst-5',
     price: 129.99,
@@ -91,24 +91,72 @@ export const mockCourses: Course[] = [
     rating: 4.8,
     enrolledStudents: 2100,
     lessons: [
-      { id: 'l5-1', title: 'Understanding ML Concepts', duration: 45, content: 'Learn about supervised vs. unsupervised learning...' },
+      { id: 'l5-1', title: 'Async/Await and Promises', duration: 45, content: 'Master asynchronous JavaScript...' },
     ],
   },
   {
     id: '6',
-    title: 'Cybersecurity Essentials',
-    description: 'Protect yourself and your organization from cyber threats. Learn about network security, cryptography, and ethical hacking.',
-    category: 'Security',
+    title: 'Ethical Hacking & Penetration Testing',
+    description: 'Learn to think like a hacker to defend your systems. A practical, hands-on approach to cybersecurity.',
+    category: 'Cybersecurity',
     instructor: 'David Wilson',
     instructorId: 'inst-6',
     thumbnail: findImage('course-6'),
-    duration: '8 weeks',
+    duration: '14 weeks',
     rating: 4.9,
     enrolledStudents: 4200,
+    price: 199.99,
     lessons: [
       { id: 'l6-1', title: 'Basics of Cryptography', duration: 55, content: 'Understand encryption and hashing algorithms...' },
     ],
   },
+  {
+    id: '7',
+    title: 'DevOps Essentials: CI/CD with Jenkins & Docker',
+    description: 'Automate your development pipeline. Learn how to build, test, and deploy applications seamlessly.',
+    category: 'DevOps',
+    instructor: 'Linda Green',
+    instructorId: 'inst-7',
+    price: 119.99,
+    thumbnail: findImage('course-7'),
+    duration: '10 weeks',
+    rating: 4.7,
+    enrolledStudents: 1800,
+    lessons: [
+      { id: 'l7-1', title: 'Introduction to CI/CD', duration: 40, content: 'Learn the core concepts of Continuous Integration...' },
+    ],
+  },
+  {
+    id: '8',
+    title: 'Cloud Native with Kubernetes',
+    description: 'Master container orchestration with Kubernetes. Deploy, scale, and manage containerized applications like a pro.',
+    category: 'DevOps',
+    instructor: 'James Lee',
+    instructorId: 'inst-8',
+    thumbnail: findImage('course-8'),
+    duration: '16 weeks',
+    rating: 4.8,
+    enrolledStudents: 2300,
+    price: 179.99,
+    lessons: [
+      { id: 'l8-1', title: 'Kubernetes Architecture', duration: 60, content: 'Understand the components of a Kubernetes cluster...' },
+    ],
+  },
+  {
+    id: '9',
+    title: 'Python for Everybody',
+    description: 'A beginner-friendly introduction to Python programming. No prior experience required.',
+    category: 'Development',
+    instructor: 'Charles Severance',
+    instructorId: 'inst-9',
+    thumbnail: findImage('course-9'),
+    duration: '12 weeks',
+    rating: 4.9,
+    enrolledStudents: 10500,
+    lessons: [
+      { id: 'l9-1', title: 'Your First Python Program', duration: 30, content: 'Write and run your first lines of Python code...' },
+    ],
+  }
 ];
 
 export const mockForumPosts: ForumPost[] = [
@@ -153,4 +201,87 @@ export const mockForumPosts: ForumPost[] = [
     likes: 25,
     replies: [],
   },
+];
+
+export const mockLearningPaths: LearningPath[] = [
+  {
+    id: 'lp-1',
+    title: 'Become a Front-End Developer',
+    description: 'Master the core technologies of front-end web development with these curated playlists.',
+    category: 'Web Development',
+    playlists: [
+      {
+        id: 'pl-1-1',
+        title: 'HTML & CSS Crash Course',
+        author: 'freeCodeCamp.org',
+        url: 'https://www.youtube.com/playlist?list=PLWKjhJtqVAbnSe1qUNMG7AbP-K8Y6k22v',
+        duration: '11 hours'
+      },
+      {
+        id: 'pl-1-2',
+        title: 'JavaScript for Beginners',
+        author: 'freeCodeCamp.org',
+        url: 'https://www.youtube.com/playlist?list=PLWKjhJtqVAbk2qB-R0qkl_z2h-HkO7_AC',
+        duration: '10 hours'
+      },
+      {
+        id: 'pl-1-3',
+        title: 'React Full Course',
+        author: 'freeCodeCamp.org',
+        url: 'https://www.youtube.com/watch?v=bMknfKXIFA8',
+        duration: '12 hours'
+      }
+    ]
+  },
+  {
+    id: 'lp-2',
+    title: 'Cybersecurity Analyst Path',
+    description: 'Learn the fundamentals of cybersecurity, from networking to ethical hacking.',
+    category: 'Cybersecurity',
+    playlists: [
+      {
+        id: 'pl-2-1',
+        title: 'CompTIA Network+ Full Course',
+        author: 'Professor Messer',
+        url: 'https://www.youtube.com/playlist?list=PLG49S3nxzAnkF_6K7sVmmF5Yg3L5iI3sO',
+        duration: '22 hours'
+      },
+      {
+        id: 'pl-2-2',
+        title: 'Ethical Hacking Full Course',
+        author: 'freeCodeCamp.org',
+        url: 'https://www.youtube.com/watch?v=Z5AZaYI2b5c',
+        duration: '15 hours'
+      }
+    ]
+  },
+   {
+    id: 'lp-3',
+    title: 'DevOps Engineering Path',
+    description: 'Master the tools and practices to bridge the gap between development and operations.',
+    category: 'DevOps',
+    playlists: [
+      {
+        id: 'pl-3-1',
+        title: 'Docker for Beginners',
+        author: 'freeCodeCamp.org',
+        url: 'https://www.youtube.com/watch?v=3c-iBn73dDE',
+        duration: '4 hours'
+      },
+      {
+        id: 'pl-3-2',
+        title: 'Kubernetes Course',
+        author: 'freeCodeCamp.org',
+        url: 'https://www.youtube.com/watch?v=X48VuDVv0do',
+        duration: '8 hours'
+      },
+      {
+        id: 'pl-3-3',
+        title: 'Jenkins Full Course',
+        author: 'freeCodeCamp.org',
+        url: 'https://www.youtube.com/watch?v=FX322r_G-6k',
+        duration: '5 hours'
+      }
+    ]
+  }
 ];
