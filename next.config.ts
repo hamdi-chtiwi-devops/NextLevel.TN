@@ -48,6 +48,14 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  devIndicators: {
+    buildActivity: false,
+  },
+  experimental: {
+    allowedDevOrigins: [
+      'https://6000-firebase-studio-*.cloudworkstations.dev',
+    ],
+  },
 };
 
 export default nextConfig;
