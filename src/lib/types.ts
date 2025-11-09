@@ -65,7 +65,7 @@ export type LearningPath = {
   title: string;
   description: string;
   category: string;
-  playlists: YouTubePlaylist[];
+  steps: Course[];
 };
 
 export type YouTubePlaylist = {

@@ -1,22 +1,19 @@
 'use client';
 
-import { YouTubePlaylist } from '@/lib/types';
+import { type Course } from '@/lib/types';
 import { Button } from '../ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import Link from 'next/link';
-import { Youtube, Clock, Code, ShieldCheck, Database, Server } from 'lucide-react';
+import { Youtube, Clock, Code, ShieldCheck, Database, Server, Users, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-type Step = YouTubePlaylist & {
-    icon?: React.ElementType;
-};
+import Image from 'next/image';
 
 interface RoadmapProps {
   title: string;
   description: string;
   category: string;
-  steps: Step[];
+  steps: Course[];
 }
 
 const stepColors = [
@@ -81,29 +78,36 @@ export function Roadmap({ title, description, category, steps }: RoadmapProps) {
                   </div>
 
                   {/* Content Card */}
-                  <div className={cn("w-full rounded-xl border p-4 transition-all hover:shadow-md hover:-translate-y-0.5", colorClass)}>
-                      <div className="flex items-center gap-4 mb-2">
-                        <Code className="h-8 w-8" />
-                        <p className="font-bold font-headline text-lg text-foreground">{step.title}</p>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3 pl-12">
-                        <span className="flex items-center gap-1.5">
-                          <Youtube className="w-4 h-4" />
-                          {step.author}
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-4 h-4" />
-                          {step.duration}
-                        </span>
-                      </div>
-                      <div className="pl-12">
-                        <Button asChild variant="secondary" size="sm" className="bg-background/70 border">
-                            <Link href={step.url} target="_blank" rel="noopener noreferrer">
-                            Watch on YouTube
-                            </Link>
-                        </Button>
-                      </div>
-                  </div>
+                  <Link href={`/courses/${step.id}`} className={cn("w-full rounded-xl border p-4 transition-all hover:shadow-md hover:-translate-y-0.5 group", colorClass)}>
+                    <div className='flex flex-col sm:flex-row gap-4'>
+                        <div className="relative w-full sm:w-48 h-32 sm:h-auto flex-shrink-0">
+                            <Image src={step.thumbnail} alt={step.title} layout='fill' className='rounded-md object-cover' />
+                        </div>
+                        <div>
+                            <p className="font-bold font-headline text-lg text-foreground group-hover:text-primary transition-colors">{step.title}</p>
+                            <p className="text-sm text-muted-foreground mt-1">by {step.instructor}</p>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-2">
+                                <span className="flex items-center gap-1.5">
+                                    <Star className="w-4 h-4 text-amber-500" />
+                                    {step.rating}
+                                </span>
+                                <span className="flex items-center gap-1.5">
+                                    <Clock className="w-4 h-4" />
+                                    {step.duration}
+                                </span>
+                                <span className="flex items-center gap-1.5">
+                                    <Users className="w-4 h-4" />
+                                    {step.enrolledStudents.toLocaleString()}
+                                </span>
+                            </div>
+                            <Button asChild variant="secondary" size="sm" className="mt-4 bg-background/70 border">
+                                <Link href={`/courses/${step.id}`}>
+                                View Course
+                                </Link>
+                            </Button>
+                        </div>
+                    </div>
+                  </Link>
                 </div>
               );
             })}

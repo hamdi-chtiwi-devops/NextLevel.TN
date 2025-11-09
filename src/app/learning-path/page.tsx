@@ -8,7 +8,7 @@ export default function LearningPathPage() {
       <div>
         <h1 className="text-3xl font-bold font-headline">Learning Paths</h1>
         <p className="text-muted-foreground">
-          Follow curated paths with YouTube playlists to master new skills.
+          Follow curated paths with our courses to master new skills.
         </p>
       </div>
 
@@ -19,7 +19,7 @@ export default function LearningPathPage() {
             title={path.title}
             description={path.description}
             category={path.category}
-            steps={path.playlists}
+            steps={path.steps}
           />
         ))}
       </div>

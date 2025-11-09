@@ -208,31 +208,13 @@ export const mockForumPosts: ForumPost[] = [
 export const mockLearningPaths: LearningPath[] = [
   {
     id: 'lp-1',
-    title: 'Become a Front-End Developer',
-    description: 'Master the core technologies of front-end web development with these curated playlists.',
+    title: 'Become a Full-Stack Web Developer',
+    description: 'Master the core technologies of front-end and back-end web development.',
     category: 'Web Development',
-    playlists: [
-      {
-        id: 'pl-1-1',
-        title: 'HTML & CSS Crash Course',
-        author: 'freeCodeCamp.org',
-        url: 'https://www.youtube.com/playlist?list=PLWKjhJtqVAbnSe1qUNMG7AbP-K8Y6k22v',
-        duration: '11 hours'
-      },
-      {
-        id: 'pl-1-2',
-        title: 'JavaScript for Beginners',
-        author: 'freeCodeCamp.org',
-        url: 'https://www.youtube.com/playlist?list=PLWKjhJtqVAbk2qB-R0qkl_z2h-HkO7_AC',
-        duration: '10 hours'
-      },
-      {
-        id: 'pl-1-3',
-        title: 'React Full Course',
-        author: 'freeCodeCamp.org',
-        url: 'https://www.youtube.com/watch?v=bMknfKXIFA8',
-        duration: '12 hours'
-      }
+    steps: [
+        mockCourses.find(c => c.id === '9')!, // Python for Everybody
+        mockCourses.find(c => c.id === '5')!, // Advanced JavaScript
+        mockCourses.find(c => c.id === '1')!, // Full-Stack with React & Firebase
     ]
   },
   {
@@ -240,21 +222,8 @@ export const mockLearningPaths: LearningPath[] = [
     title: 'Cybersecurity Analyst Path',
     description: 'Learn the fundamentals of cybersecurity, from networking to ethical hacking.',
     category: 'Cybersecurity',
-    playlists: [
-      {
-        id: 'pl-2-1',
-        title: 'CompTIA Network+ Full Course',
-        author: 'Professor Messer',
-        url: 'https://www.youtube.com/playlist?list=PLG49S3nxzAnkF_6K7sVmmF5Yg3L5iI3sO',
-        duration: '22 hours'
-      },
-      {
-        id: 'pl-2-2',
-        title: 'Ethical Hacking Full Course',
-        author: 'freeCodeCamp.org',
-        url: 'https://www.youtube.com/watch?v=Z5AZaYI2b5c',
-        duration: '15 hours'
-      }
+    steps: [
+        mockCourses.find(c => c.id === '6')!, // Ethical Hacking
     ]
   },
    {
@@ -262,28 +231,9 @@ export const mockLearningPaths: LearningPath[] = [
     title: 'DevOps Engineering Path',
     description: 'Master the tools and practices to bridge the gap between development and operations.',
     category: 'DevOps',
-    playlists: [
-      {
-        id: 'pl-3-1',
-        title: 'Docker for Beginners',
-        author: 'freeCodeCamp.org',
-        url: 'https://www.youtube.com/watch?v=3c-iBn73dDE',
-        duration: '4 hours'
-      },
-      {
-        id: 'pl-3-2',
-        title: 'Kubernetes Course',
-        author: 'freeCodeCamp.org',
-        url: 'https://www.youtube.com/watch?v=X48VuDVv0do',
-        duration: '8 hours'
-      },
-      {
-        id: 'pl-3-3',
-        title: 'Jenkins Full Course',
-        author: 'freeCodeCamp.org',
-        url: 'https://www.youtube.com/watch?v=FX322r_G-6k',
-        duration: '5 hours'
-      }
+    steps: [
+        mockCourses.find(c => c.id === '7')!, // DevOps Essentials
+        mockCourses.find(c => c.id === '8')!, // Cloud Native with Kubernetes
     ]
   }
 ];
