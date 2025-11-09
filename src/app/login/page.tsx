@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -92,7 +93,7 @@ export default function LoginPage() {
     if (isClient && user) {
         redirectUser(user);
     }
-  }, [user, isClient]);
+  }, [user, isClient, firestore, router, isRedirecting]);
   
 
   const handleError = (error: any) => {
@@ -118,26 +119,33 @@ export default function LoginPage() {
     });
   }
 
-  const handleGoogleSignIn = async () => {
-    if (!auth) return;
-    const provider = new GoogleAuthProvider();
+  const handleSignIn = async (signInFunction: () => Promise<User | null>) => {
+    if (!auth || !firestore) return;
     try {
-      await signInWithPopup(auth, provider);
-      // The useEffect will handle the redirect
+      const signedInUser = await signInFunction();
+      if (signedInUser) {
+        await redirectUser(signedInUser);
+      }
     } catch (error: any) {
       handleError(error);
+      setIsRedirecting(false); // Reset redirecting state on error
     }
+  };
+
+  const handleGoogleSignIn = async () => {
+    await handleSignIn(async () => {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth!, provider);
+      return result.user;
+    });
   };
 
   const handleEmailSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!auth) return;
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // The useEffect will handle the redirect
-    } catch (error: any) {
-      handleError(error);
-    }
+    await handleSignIn(async () => {
+      const result = await signInWithEmailAndPassword(auth!, email, password);
+      return result.user;
+    });
   };
   
   if (!isClient || user === undefined || isRedirecting || user) {

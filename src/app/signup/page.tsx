@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
-import { Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User as UserIcon } from 'lucide-react';
 import { useAuth, useFirestore, useUser } from '@/firebase';
 import {
   GoogleAuthProvider,
@@ -72,32 +72,10 @@ export default function SignupPage() {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  const redirectUser = async (currentUser: FirebaseUser) => {
-    if (!firestore || isRedirecting) return;
-    setIsRedirecting(true);
-
-    const userDocRef = doc(firestore, 'users', currentUser.uid);
-    try {
-      const docSnap = await getDoc(userDocRef);
-      if (docSnap.exists() && docSnap.data().role === 'Admin') {
-        router.push('/admin/dashboard');
-      } else {
-        router.push('/dashboard');
-      }
-    } catch {
-      router.push('/dashboard');
-    }
-  };
-
-  useEffect(() => {
-    if (isClient && user) {
-        redirectUser(user);
-    }
-  }, [user, isClient]);
-
+  
   const handleSuccess = async (createdUser: FirebaseUser) => {
-    if (!firestore) return;
+    if (!firestore || !createdUser) return;
+    setIsRedirecting(true);
     
     const isAdmin = createdUser.email === 'admin@admin.com';
 
@@ -115,6 +93,12 @@ export default function SignupPage() {
       router.push('/dashboard');
     }
   };
+
+  useEffect(() => {
+    if (isClient && user) {
+        handleSuccess(user);
+    }
+  }, [user, isClient, firestore, router]);
 
   const handleError = (error: any) => {
     let title = 'Sign up failed.';
@@ -148,8 +132,8 @@ export default function SignupPage() {
     if (!auth) return;
     const provider = new GoogleAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
-      await handleSuccess(result.user);
+      await signInWithPopup(auth, provider);
+      // The useEffect will handle the redirect on user state change
     } catch (error) {
       handleError(error);
     }
@@ -161,9 +145,7 @@ export default function SignupPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
-      // Create a temporary user object with the new display name to pass to handleSuccess
-      const userWithDisplayName = { ...userCredential.user, displayName: name };
-      await handleSuccess(userWithDisplayName);
+      // The useEffect will handle the redirect on user state change
     } catch (error) {
       handleError(error);
     }
@@ -192,7 +174,7 @@ export default function SignupPage() {
              <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
                   id="name"
                   type="text"
