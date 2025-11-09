@@ -3,14 +3,14 @@ export type User = {
   name: string;
   email: string;
   avatar: string;
-  role: 'Student' | 'Instructor' | 'Admin';
+  role: 'Student' | 'Instructor';
 };
 
 export type UserProfile = {
   id: string;
   name: string;
   email: string;
-  role: 'Student' | 'Admin';
+  role: 'Student';
 }
 
 export type Course = {

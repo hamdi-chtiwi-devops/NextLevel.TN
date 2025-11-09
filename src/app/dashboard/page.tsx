@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 type UserProfile = {
   name: string;
   email: string;
-  role: 'Student' | 'Admin';
+  role: 'Student';
 };
 
 export default function DashboardPage() {
@@ -42,11 +42,6 @@ export default function DashboardPage() {
         .then((docSnap) => {
           if (docSnap.exists()) {
             const profile = docSnap.data() as UserProfile;
-             // This page is only for students. Admins are redirected by the root page.
-            if (profile.role === 'Admin') {
-                router.push('/admin/dashboard');
-                return;
-            }
             setUserProfile(profile);
           } else {
              // New user, show welcome screen

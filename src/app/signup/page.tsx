@@ -77,21 +77,15 @@ export default function SignupPage() {
     if (!firestore || !createdUser) return;
     setIsRedirecting(true);
     
-    const isAdmin = createdUser.email === 'admin@admin.com';
-
     const userProfile = {
       name: createdUser.displayName,
       email: createdUser.email,
-      role: isAdmin ? 'Admin' : 'Student',
+      role: 'Student',
     };
 
     await setDoc(doc(firestore, 'users', createdUser.uid), userProfile);
     
-    if (isAdmin) {
-      router.push('/admin/dashboard');
-    } else {
-      router.push('/dashboard');
-    }
+    router.push('/dashboard');
   };
 
   useEffect(() => {
@@ -193,7 +187,7 @@ export default function SignupPage() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="student@email.com or admin@admin.com"
+                  placeholder="student@email.com"
                   required
                   className="pl-10"
                   value={email}

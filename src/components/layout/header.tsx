@@ -12,15 +12,12 @@ import {
   BookOpen,
   LayoutDashboard,
   Users,
-  Shield,
 } from 'lucide-react';
 import { UserNav } from './user-nav';
 import { Logo } from '@/components/logo';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useUser, useFirestore } from '@/firebase';
-import { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { useUser } from '@/firebase';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -28,31 +25,14 @@ const navItems = [
   { href: '/community', label: 'Community', icon: Users },
 ];
 
-const adminNavItem = { href: '/admin/dashboard', label: 'Admin', icon: Shield };
-
 export function Header() {
   const pathname = usePathname();
   const isMobile = useIsMobile();
   const user = useUser();
-  const firestore = useFirestore();
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    if (user && firestore) {
-      const userDocRef = doc(firestore, 'users', user.uid);
-      getDoc(userDocRef).then((docSnap) => {
-        if (docSnap.exists() && docSnap.data().role === 'Admin') {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-      });
-    } else {
-      setIsAdmin(false);
-    }
-  }, [user, firestore]);
-
-  const allNavItems = isAdmin ? [...navItems, adminNavItem] : navItems;
+  
+  if (!user) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
@@ -73,7 +53,7 @@ export function Header() {
                 >
                   <Logo /> <span className="text-xl font-bold font-headline">NextLevel.TN</span>
                 </Link>
-                {allNavItems.map((item) => (
+                {navItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -98,7 +78,7 @@ export function Header() {
       </div>
 
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6 ml-6">
-        {allNavItems.map((item) => (
+        {navItems.map((item) => (
             <Link
                 key={item.href}
                 href={item.href}
@@ -108,7 +88,6 @@ export function Header() {
                 )}
             >
                 {item.label}
-                {item.href.startsWith('/admin') && <item.icon className="h-4 w-4" />}
             </Link>
         ))}
       </nav>

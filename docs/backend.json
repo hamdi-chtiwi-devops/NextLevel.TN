@@ -18,8 +18,7 @@
           "type": "string",
           "description": "The user's role.",
           "enum": [
-            "Student",
-            "Admin"
+            "Student"
           ]
         }
       },

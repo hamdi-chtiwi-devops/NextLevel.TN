@@ -12,11 +12,10 @@ function AppContent({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   
   const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/signup');
-  const isAdminPage = pathname.startsWith('/admin');
   const isRootPage = pathname === '/';
 
   // Only show the main layout for non-auth and non-admin pages
-  const showMainLayout = !isAuthPage && !isAdminPage && !isRootPage;
+  const showMainLayout = !isAuthPage && !isRootPage;
 
   return (
     <>

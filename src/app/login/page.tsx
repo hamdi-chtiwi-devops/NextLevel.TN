@@ -15,17 +15,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Mail, Lock } from 'lucide-react';
-import { useAuth, useUser, useFirestore } from '@/firebase';
+import { useAuth, useUser } from '@/firebase';
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-  User,
 } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { doc, getDoc } from 'firebase/firestore';
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -59,41 +57,23 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 export default function LoginPage() {
   const auth = useAuth();
   const user = useUser();
-  const firestore = useFirestore();
   const router = useRouter();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isClient, setIsClient] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(false);
 
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const redirectUser = async (currentUser: User) => {
-    if (!firestore || isRedirecting) return;
-    setIsRedirecting(true);
-
-    const userDocRef = doc(firestore, 'users', currentUser.uid);
-    try {
-      const docSnap = await getDoc(userDocRef);
-      if (docSnap.exists() && docSnap.data().role === 'Admin') {
-        router.push('/admin/dashboard');
-      } else {
-        router.push('/dashboard');
-      }
-    } catch {
-      router.push('/dashboard');
-    }
-  };
 
   useEffect(() => {
     if (isClient && user) {
-        redirectUser(user);
+        router.push('/dashboard');
     }
-  }, [user, isClient, firestore, router, isRedirecting]);
+  }, [user, isClient, router]);
   
 
   const handleError = (error: any) => {
@@ -119,36 +99,29 @@ export default function LoginPage() {
     });
   }
 
-  const handleSignIn = async (signInFunction: () => Promise<User | null>) => {
-    if (!auth || !firestore) return;
+  const handleGoogleSignIn = async () => {
+    if (!auth) return;
     try {
-      const signedInUser = await signInFunction();
-      if (signedInUser) {
-        await redirectUser(signedInUser);
-      }
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      // The useEffect hook will handle the redirect
     } catch (error: any) {
       handleError(error);
-      setIsRedirecting(false); // Reset redirecting state on error
     }
-  };
-
-  const handleGoogleSignIn = async () => {
-    await handleSignIn(async () => {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth!, provider);
-      return result.user;
-    });
   };
 
   const handleEmailSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await handleSignIn(async () => {
-      const result = await signInWithEmailAndPassword(auth!, email, password);
-      return result.user;
-    });
+    if (!auth) return;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // The useEffect hook will handle the redirect
+    } catch (error: any) {
+      handleError(error);
+    }
   };
   
-  if (!isClient || user === undefined || isRedirecting || user) {
+  if (!isClient || user === undefined || user) {
     return <div>Loading...</div>;
   }
 
