@@ -68,6 +68,22 @@ export type LearningPath = {
   steps: Course[];
 };
 
+export type ProjectStep = {
+  title: string;
+  content: string;
+};
+
+export type Project = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  thumbnail: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  technologies: string[];
+  steps: ProjectStep[];
+};
+
 export type YouTubePlaylist = {
   id: string;
   title: string;

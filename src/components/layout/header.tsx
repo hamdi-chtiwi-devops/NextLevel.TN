@@ -13,6 +13,7 @@ import {
   LayoutDashboard,
   Users,
   Route,
+  Wrench,
 } from 'lucide-react';
 import { UserNav } from './user-nav';
 import { Logo } from '@/components/logo';
@@ -23,6 +24,7 @@ import { useUser } from '@/firebase';
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/courses', label: 'Courses', icon: BookOpen },
+  { href: '/projects', label: 'Projects', icon: Wrench },
   { href: '/learning-path', label: 'Learning Path', icon: Route },
   { href: '/community', label: 'Community', icon: Users },
 ];

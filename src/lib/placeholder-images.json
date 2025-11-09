@@ -87,20 +87,80 @@
     {
       "id": "dashboard-hero-1",
       "description": "Developer interacting with floating code windows.",
-      "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg",
+      "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg?w=826",
       "imageHint": "developer augmented reality"
     },
     {
       "id": "dashboard-hero-2",
       "description": "A glowing lightbulb symbolizing ideas and knowledge.",
-      "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg",
+      "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg?w=826",
       "imageHint": "glowing lightbulb"
     },
     {
       "id": "dashboard-hero-3",
       "description": "A person focused on learning at a computer.",
-      "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg",
+      "imageUrl": "https://img.freepik.com/premium-vector/web-development-programmer-code-testing-augmented-reality-illustration_375605-311.jpg?w=826",
       "imageHint": "person learning"
+    },
+    {
+      "id": "project-1",
+      "description": "To-Do List App Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1579412690829-6301ca63d187?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "checklist notebook"
+    },
+    {
+      "id": "project-2",
+      "description": "Weather App Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1580216258941-872f3c3a9926?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "weather forecast"
+    },
+    {
+      "id": "project-3",
+      "description": "Portfolio Website Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1559028006-448665bd7c20?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "personal website"
+    },
+    {
+      "id": "project-4",
+      "description": "Real-time Chat App Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "chat bubbles"
+    },
+    {
+      "id": "project-5",
+      "description": "Blog with Firebase Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "writing blog"
+    },
+    {
+      "id": "project-6",
+      "description": "Dockerizing a Node.js Application Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1605745341315-0536c9f69461?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "shipping containers"
+    },
+    {
+      "id": "project-7",
+      "description": "CI/CD Pipeline with Jenkins Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "automation gears"
+    },
+    {
+      "id": "project-8",
+      "description": "Basic Network Scanner with Python Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1544890225-2fde0e66ea9c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "network matrix"
+    },
+    {
+      "id": "project-9",
+      "description": "URL Shortener with Node.js Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "link chain"
+    },
+    {
+      "id": "project-10",
+      "description": "E-commerce Frontend with React Thumbnail",
+      "imageUrl": "https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "online shopping"
     }
   ]
 }
