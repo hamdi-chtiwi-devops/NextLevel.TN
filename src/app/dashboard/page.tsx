@@ -1,7 +1,6 @@
 
 'use client';
 import { EnrolledCourses } from '@/components/dashboard/enrolled-courses';
-import { ProgressOverview } from '@/components/dashboard/progress-overview';
 import { Recommendations } from '@/components/dashboard/recommendations';
 import { useUser, useFirestore } from '@/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -127,7 +126,6 @@ export default function DashboardPage() {
           <AIGeneratedQuiz />
         </div>
         <div className="lg:col-span-1 space-y-8">
-          <ProgressOverview />
           <Recommendations />
           <AIQnA />
         </div>
