@@ -1,9 +1,8 @@
+
 import { mockLearningPaths } from '@/lib/data';
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -32,15 +31,18 @@ export default function LearningPathPage() {
               <CardTitle className="text-2xl">{path.title}</CardTitle>
               <CardDescription>{path.description}</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <div className="p-6 pt-0">
+              <div className="relative space-y-8">
+                {/* Vertical Connector Line */}
+                <div className="absolute left-6 top-2 h-full w-0.5 bg-border -translate-x-1/2"></div>
+                
                 {path.playlists.map((playlist, index) => (
-                  <div key={playlist.id} className="flex items-start gap-4 p-4 rounded-lg border bg-muted/20">
-                     <div className="flex-shrink-0 text-primary font-bold text-xl h-8 w-8 bg-primary/10 rounded-full flex items-center justify-center">
+                  <div key={playlist.id} className="relative flex items-start gap-6">
+                     <div className="flex-shrink-0 text-primary font-bold text-xl h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center z-10 border-4 border-background">
                         {index + 1}
                     </div>
-                    <div className="flex-1">
-                      <p className="font-semibold">{playlist.title}</p>
+                    <div className="flex-1 pt-2">
+                      <p className="font-semibold text-lg">{playlist.title}</p>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
                         <span className="flex items-center gap-1.5">
                           <Youtube className="w-4 h-4" />
@@ -51,16 +53,16 @@ export default function LearningPathPage() {
                           {playlist.duration}
                         </span>
                       </div>
+                       <Button asChild variant="secondary" size="sm" className="mt-3">
+                         <Link href={playlist.url} target="_blank" rel="noopener noreferrer">
+                           Watch on YouTube
+                         </Link>
+                       </Button>
                     </div>
-                    <Button asChild variant="outline" size="sm">
-                      <Link href={playlist.url} target="_blank" rel="noopener noreferrer">
-                        Watch on YouTube
-                      </Link>
-                    </Button>
                   </div>
                 ))}
               </div>
-            </CardContent>
+            </div>
           </Card>
         ))}
       </div>
