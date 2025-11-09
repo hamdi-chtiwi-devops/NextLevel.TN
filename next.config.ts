@@ -1,3 +1,4 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
@@ -48,14 +49,12 @@ const nextConfig: NextConfig = {
       }
     ],
   },
-  devIndicators: {
-    buildActivity: false,
-  },
   experimental: {
-    allowedDevOrigins: [
-      'https://6000-firebase-studio-*.cloudworkstations.dev',
-    ],
+    // allowedDevOrigins is now a top-level property in Next.js 14+
   },
+  allowedDevOrigins: [
+    'https://6000-firebase-studio-*.cloudworkstations.dev',
+  ],
 };
 
 export default nextConfig;
