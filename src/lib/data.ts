@@ -1,5 +1,7 @@
+
 import type { User, Course, ForumPost, LearningPath } from './types';
 import { findImage } from './placeholder-images';
+import { Code, ShieldCheck, Database, Server } from 'lucide-react';
 
 export const mockUser: User = {
   id: 'user-123',
