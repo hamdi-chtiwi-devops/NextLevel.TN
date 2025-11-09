@@ -14,6 +14,7 @@ import {
   Users,
   Route,
   Wrench,
+  Gamepad2,
 } from 'lucide-react';
 import { UserNav } from './user-nav';
 import { Logo } from '@/components/logo';
@@ -26,6 +27,7 @@ const navItems = [
   { href: '/courses', label: 'Courses', icon: BookOpen },
   { href: '/projects', label: 'Projects', icon: Wrench },
   { href: '/learning-path', label: 'Learning Path', icon: Route },
+  { href: '/coding-game', label: 'Coding Game', icon: Gamepad2 },
   { href: '/community', label: 'Community', icon: Users },
 ];
 
