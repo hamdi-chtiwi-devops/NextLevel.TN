@@ -65,6 +65,12 @@
       "description": "User profile avatar",
       "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBwZXJzb258ZW58MHx8fHwxNzYyNTY5NTc2fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "professional person"
+    },
+    {
+      "id": "dashboard-hero-1",
+      "description": "Smiling student holding a laptop",
+      "imageUrl": "https://images.unsplash.com/photo-1622378345447-109003505a41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzbWlsaW5nJTIwc3R1ZGVudHxlbnwwfHx8fDE3NjI2NzQ0MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smiling student"
     }
   ]
 }
