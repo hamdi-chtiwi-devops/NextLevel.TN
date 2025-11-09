@@ -4,7 +4,6 @@ import { EnrolledCourses } from '@/components/dashboard/enrolled-courses';
 import { ProgressOverview } from '@/components/dashboard/progress-overview';
 import { Recommendations } from '@/components/dashboard/recommendations';
 import { useUser, useFirestore } from '@/firebase';
-import { Badge } from '@/components/ui/badge';
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { AIGeneratedQuiz } from '@/components/dashboard/ai-generated-quiz';
@@ -15,6 +14,7 @@ import { mockCourses } from '@/lib/data';
 import { DashboardHero } from '@/components/dashboard/dashboard-hero';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type UserProfile = {
   name: string;
@@ -29,28 +29,29 @@ export default function DashboardPage() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // For this example, we'll assume the first two mock courses are enrolled.
-  // In a real app, this would come from a user's data.
   const enrolledCourses = mockCourses.slice(0, 2); 
 
   useEffect(() => {
+    // If auth is still loading, do nothing.
     if (user === undefined) {
-      return;
+        setLoading(true);
+        return;
     }
+    // If user is not logged in, redirect.
     if (user === null) {
       router.push('/login');
       return;
     }
     
+    // If we have a user and firestore, fetch the profile.
     if (user && firestore) {
       const userDocRef = doc(firestore, 'users', user.uid);
       getDoc(userDocRef)
         .then((docSnap) => {
           if (docSnap.exists()) {
-            const profile = docSnap.data() as UserProfile;
-            setUserProfile(profile);
+            setUserProfile(docSnap.data() as UserProfile);
           } else {
-             // New user, create a temporary profile from auth details
+            // New user, create a temporary profile from auth details
             setUserProfile({
                 name: user.displayName || 'Learner',
                 email: user.email || '',
@@ -61,40 +62,62 @@ export default function DashboardPage() {
         .finally(() => {
           setLoading(false);
         });
+    } else {
+        // Handle case where firestore might not be ready (though unlikely with provider)
+        setLoading(false);
     }
   }, [user, firestore, router]);
-
-  if (loading || user === undefined) {
-    return <div>Loading...</div>;
-  }
-  
-  if (!userProfile) {
-    // This can happen briefly during redirects or if the user doc is missing.
-    return <div>Loading user profile...</div>
-  }
-
-  const firstName = userProfile?.name.split(' ')[0] || 'Learner';
-  const nameFallback = (userProfile?.name || "U").substring(0, 2).toUpperCase();
   
   if (enrolledCourses.length === 0) {
-    return <Welcome name={firstName} />;
+    const name = userProfile?.name.split(' ')[0] || user?.displayName?.split(' ')[0] || 'Learner';
+    return <Welcome name={name} />;
+  }
+
+  const getFirstName = () => {
+      if (userProfile) {
+          return userProfile.name.split(' ')[0];
+      }
+      if (user?.displayName) {
+          return user.displayName.split(' ')[0];
+      }
+      return 'Learner';
+  }
+
+  const getAvatarFallback = () => {
+      if (userProfile) {
+          return (userProfile.name || "U").substring(0, 2).toUpperCase();
+      }
+      if (user?.displayName) {
+          return (user.displayName || "U").substring(0, 2).toUpperCase();
+      }
+      return "L";
   }
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center gap-4">
-        <Avatar className="h-12 w-12">
-            <AvatarFallback>{nameFallback}</AvatarFallback>
-        </Avatar>
-        <div>
-            <h1 className="text-2xl font-bold">
-                Welcome back, {firstName}!
-            </h1>
-            <Link href="/profile" className="text-sm text-primary hover:underline">
-                Add occupation and interests
-            </Link>
-        </div>
-      </div>
+        {loading ? (
+            <div className="flex items-center gap-4">
+                <Skeleton className="h-12 w-12 rounded-full" />
+                <div className='space-y-2'>
+                    <Skeleton className="h-6 w-48" />
+                    <Skeleton className="h-4 w-40" />
+                </div>
+            </div>
+        ) : (
+            <div className="flex items-center gap-4">
+                <Avatar className="h-12 w-12">
+                    <AvatarFallback>{getAvatarFallback()}</AvatarFallback>
+                </Avatar>
+                <div>
+                    <h1 className="text-2xl font-bold">
+                        Welcome back, {getFirstName()}!
+                    </h1>
+                    <Link href="/profile" className="text-sm text-primary hover:underline">
+                        Add occupation and interests
+                    </Link>
+                </div>
+            </div>
+        )}
       
       <DashboardHero />
 
