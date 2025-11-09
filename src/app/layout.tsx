@@ -7,6 +7,7 @@ import { Header } from '@/components/layout/header';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
+import { ThemeProvider } from '@/components/theme-provider';
 
 function AppContent({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -50,9 +51,16 @@ export default function RootLayout({
         <meta name="description" content="A modern, intelligent, and fully managed e-learning platform." />
       </head>
       <body className="font-body antialiased">
-        <FirebaseClientProvider>
-          <AppContent>{children}</AppContent>
-        </FirebaseClientProvider>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <FirebaseClientProvider>
+                <AppContent>{children}</AppContent>
+            </FirebaseClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
